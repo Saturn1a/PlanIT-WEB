@@ -24,11 +24,13 @@ document.getElementById('login-btn').addEventListener('click', function(e) {
     })
     .then(data => {
         console.log('Success:', data);
-        alert('Login successful! Token: ' + data.Token);
-        // Lagre token for senere bruk, f.eks. i sessionStorage
-        // sessionStorage.setItem('authToken', data.Token);
+        // Lagre token i sessionStorage
+        sessionStorage.setItem('authToken', data.Token);
+        // Omdiriger brukeren til en ny side etter vellykket innlogging
+        window.location.href = '/index.html';
     })
     .catch((error) => {
         console.error('Error:', error);
+        alert(error.message); // Viser en feilmelding til brukeren
     });
 });
