@@ -29,7 +29,7 @@ document.getElementById('login-btn').addEventListener('click', function(e) {
         // Lagre token i sessionStorage
         sessionStorage.setItem('authToken', data.Token);
         // Omdiriger brukeren til en ny side etter vellykket innlogging
-        window.location.href = 'index.html';
+        window.location.href = 'home.html';
     })
     .catch((error) => {
         console.error('Error:', error);
