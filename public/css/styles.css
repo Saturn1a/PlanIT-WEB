@@ -1,0 +1,33 @@
+/* Change background color of the body element */
+body {
+   /* background-color: #af537b;  /* Adjust this color code to your preference */
+   /* margin: 0;  /* Remove default margins for better centering */
+    background-image: url(../images/space_background_pixel_art.jpeg);
+    background-size: cover; /* Make the image fill the entire background */
+    background-repeat: no-repeat; /* Prevent the image from repeating */
+  }
+
+  label,
+input[type="email"],
+input[type="password"],
+button {
+  font-size: 1.2em;  /* Increase font size for form elements */
+  padding: 10px 20px;  /* Increase padding for better spacing */
+}
+  
+  /* Center the entire content (form) horizontally */
+  #login-form {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;  /* Set minimum height for full viewport height centering */
+    gap: 15px;
+  }
+  
+  /* Optional: Center the content vertically within the form */
+  #login-form div {
+    border-radius: 5px;  /* Set rounded corner radius */
+    background-color: #fff;  /* Optional: Add a white background */
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);  /* Optional: Add subtle shadow */
+  }
+  
