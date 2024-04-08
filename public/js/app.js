@@ -5,7 +5,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
     if (logoutBtn) {
         logoutBtn.addEventListener('click', function() {
             sessionStorage.removeItem('authToken'); // Fjerner token fra sessionStorage
-            window.location.href = 'login.html'; // Omdirigerer tilbake til innloggingssiden
+            window.location.href = 'index.html'; // Omdirigerer tilbake til innloggingssiden
         });
     }
 });
