@@ -1,0 +1,5 @@
+#ignore all log files
+*.log
+bin/
+launch.json
+
