@@ -9,7 +9,7 @@ document.getElementById('login-btn').addEventListener('click', function(e) {
         Password: password
     };
 
-    fetch('https://localhost:7019/api/v1/authentication/login', { 
+    fetch('https://localhost:7019/api/v1/Authentication/login', { 
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
