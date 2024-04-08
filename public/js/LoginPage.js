@@ -1,6 +1,8 @@
 document.getElementById('login-btn').addEventListener('click', function(e) {
     e.preventDefault();
 
+    const errorMessage = document.getElementById('error-message');
+
     var email = document.getElementById('email').value;
     var password = document.getElementById('password').value;
 
@@ -32,5 +34,7 @@ document.getElementById('login-btn').addEventListener('click', function(e) {
     .catch((error) => {
         console.error('Error:', error);
         alert(error.message); // Viser en feilmelding til brukeren
+        errorMessage.textContent = 'Wrong password'; // Generic message
+        errorMessage.style.color = 'black';
     });
 });
