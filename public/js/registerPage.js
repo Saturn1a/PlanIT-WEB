@@ -1,6 +1,16 @@
 document.getElementById('registration-form').addEventListener('submit', function(e) {
     e.preventDefault(); // Prevent the default form submission
 
+
+    const email = document.getElementById('email').value;
+    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/; // Simple email pattern
+    if (!emailPattern.test(email)) {
+        document.getElementById('email-error-message').textContent = "Please enter a valid email address!";
+        return; // Stop the form submission
+    } else {
+        document.getElementById('email-error-message').textContent = ""; // Clear any existing error message
+    }
+
     const password = document.getElementById('password').value;
     const confirmPassword = document.getElementById('confirm-password').value;
     if (password !== confirmPassword) {
