@@ -5,12 +5,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login</title>
     <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/header.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
 </head>
 <body>
-    <h2>PlanIT</h2>
+    <div class="header-container">
+        <h2>PlanIT</h2>
+        <a href="register.html" class="button">Sign Up</a>
+    </div>
     <form id="login-form">
         <div>
             <label for="email">Email:</label>
@@ -19,7 +23,7 @@
         <div>
             <label for="password">Password:</label>
             <input type="password" id="password" name="password" required>
-            <span id="error-message"></span> </div>
+            <span id="error-message"></span>
         </div>
         <button type="button" id="login-btn">Login</button>
     </form>
