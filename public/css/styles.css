@@ -17,7 +17,12 @@ button {
   font-family: "Press Start 2P", system-ui;
   font-weight: 400;
   font-style: normal;
-    
+  
+  
+}
+
+.button:hover {
+  background-color: #be5aa9;
 }
 
   
@@ -38,6 +43,6 @@ button {
     border-radius: 10px;  /* Set rounded corner radius */
     background-color: #fff;  /* Optional: Add a white background */
     box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);  /* Optional: Add subtle shadow */
-    border: 5px solid pink;
+    border: px solid rgb(0, 0, 0);
   }
   

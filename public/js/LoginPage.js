@@ -34,7 +34,7 @@ document.getElementById('login-btn').addEventListener('click', function(e) {
     .catch((error) => {
         console.error('Error:', error);
         alert(error.message); // Viser en feilmelding til brukeren
-        errorMessage.textContent = 'Wrong password'; // Generic message
-        errorMessage.style.color = 'black';
+        //errorMessage.textContent = 'Wrong password'; // Generic message
+        //errorMessage.style.color = 'black';
     });
 });
