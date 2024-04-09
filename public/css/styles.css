@@ -13,6 +13,26 @@ input[type="password"],
 button {
   font-size: 1.2em;  /* Increase font size for form elements */
   padding: 10px 20px;  /* Increase padding for better spacing */
+  border-radius: 10px; 
+  font-family: "Press Start 2P", system-ui;
+  font-weight: 400;
+  font-style: normal;
+    
+}
+
+h2 {
+  text-align: center;
+  padding: 1rem;
+  border: 5px solid pink;
+  margin: 0 auto;
+  background-color: white;
+  max-width: 500px;
+  border-radius: 10px; /* Adds rounded corners to the box */
+  font-family: "Press Start 2P", system-ui;
+  font-weight: 400;
+  font-style: normal;
+    
+  
 }
   
   /* Center the entire content (form) horizontally */
@@ -22,12 +42,16 @@ button {
     align-items: center;
     min-height: 100vh;  /* Set minimum height for full viewport height centering */
     gap: 15px;
+    font-family: "Press Start 2P", system-ui;
+  font-weight: 400;
+  font-style: normal;
   }
   
   /* Optional: Center the content vertically within the form */
   #login-form div {
-    border-radius: 5px;  /* Set rounded corner radius */
+    border-radius: 10px;  /* Set rounded corner radius */
     background-color: #fff;  /* Optional: Add a white background */
     box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);  /* Optional: Add subtle shadow */
+    border: 5px solid pink;
   }
   
