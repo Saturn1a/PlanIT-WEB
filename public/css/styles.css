@@ -20,20 +20,6 @@ button {
     
 }
 
-h2 {
-  text-align: center;
-  padding: 1rem;
-  border: 5px solid pink;
-  margin: 0 auto;
-  background-color: white;
-  max-width: 500px;
-  border-radius: 10px; /* Adds rounded corners to the box */
-  font-family: "Press Start 2P", system-ui;
-  font-weight: 400;
-  font-style: normal;
-    
-  
-}
   
   /* Center the entire content (form) horizontally */
   #login-form {
