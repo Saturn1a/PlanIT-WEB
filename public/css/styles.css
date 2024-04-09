@@ -1,48 +1,63 @@
-/* Change background color of the body element */
-body {
-   /* background-color: #af537b;  /* Adjust this color code to your preference */
-   /* margin: 0;  /* Remove default margins for better centering */
-    background-image: url(../images/space_background_pixel_art.jpeg);
-    background-size: cover; /* Make the image fill the entire background */
-    background-repeat: no-repeat; /* Prevent the image from repeating */
-  }
-
-  label,
-input[type="email"],
-input[type="password"],
-button {
-  font-size: 1.2em;  /* Increase font size for form elements */
-  padding: 10px 20px;  /* Increase padding for better spacing */
-  border-radius: 10px; 
+/* Adjust to match your background preference */
+body, html {
+  height: 100%;
+  margin: 0;
   font-family: "Press Start 2P", system-ui;
-  font-weight: 400;
-  font-style: normal;
-  
-  
+    font-weight: 400;
+    font-style: normal;
+  background-image: url('../images/space_background_pixel_art.jpeg'); /* Update path accordingly */
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
 }
 
-.button:hover {
-  background-color: #be5aa9;
+.header-container {
+  display: flex;
+  justify-content: space-between;
+  padding: 20px;
+  align-items: center;
 }
 
-  
-  /* Center the entire content (form) horizontally */
-  #login-form {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    min-height: 100vh;  /* Set minimum height for full viewport height centering */
-    gap: 15px;
-    font-family: "Press Start 2P", system-ui;
-  font-weight: 400;
-  font-style: normal;
-  }
-  
-  /* Optional: Center the content vertically within the form */
-  #login-form div {
-    border-radius: 10px;  /* Set rounded corner radius */
-    background-color: #fff;  /* Optional: Add a white background */
-    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);  /* Optional: Add subtle shadow */
-    border: px solid rgb(0, 0, 0);
-  }
-  
+/* Styles for the login form to make it appear inside a centered box */
+#login-form {
+  background-color: rgba(255, 255, 255, 0.8);
+  margin: auto;
+  padding: 20px;
+  width: 90%;
+  max-width: 400px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+input[type="email"], input[type="password"], button {
+  width: calc(100% - 40px); /* Adjust width based on padding */
+  padding: 10px 20px;
+  margin: 10px 0;
+  display: block;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  box-sizing: border-box;
+}
+
+button {
+  font-family: "Press Start 2P", system-ui;
+    font-weight: 400;
+    font-style: normal;
+  background-color: #bb74ea;
+  color: white;
+  border: none;
+  cursor: pointer;
+}
+
+button:hover {
+  opacity: 0.8;
+}
+
+#error-message {
+  color: red;
+  text-align: center;
+}
