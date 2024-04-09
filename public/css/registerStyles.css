@@ -10,18 +10,42 @@ body, html {
     background-size: cover;
 }
 
-.registration-container {
-    background-color: rgba(255, 255, 255, 0.8); /* Litt gjennomsiktig hvit */
-    margin: auto;
-    padding: 20px;
-    width: 90%;
-    max-width: 400px;
-    border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+header {
+    width: 100%;
+    padding: 10px 20px;
+    box-sizing: border-box;
+    position: fixed; 
+    top: 0;
+    left: 0;
+    background: #ffffff; 
+    z-index: 1000;
+}
+
+#back-button {
     position: absolute;
+    right: 20px; 
+    background-color: #bb74ea;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    cursor: pointer;
+}
+
+.registration-wrapper {
+    margin-top: 60px;
+    position: relative;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
+    width: 90%;
+    max-width: 400px;
+}
+
+.registration-container {
+    background-color: rgba(255, 255, 255, 0.8);
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
 input[type=text], input[type=email], input[type=password] {
@@ -52,7 +76,7 @@ button:hover {
     opacity: 0.8;
 }
 
-#password-error-message, #registration-success-message {
+#password-error-message, #email-error-message, #registration-success-message {
     color: red;
     text-align: center;
 }
