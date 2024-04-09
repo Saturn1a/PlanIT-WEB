@@ -10,29 +10,7 @@ body, html {
     background-size: cover;
 }
 
-header {
-    width: 100%;
-    padding: 10px 20px;
-    box-sizing: border-box;
-    position: fixed; 
-    top: 0;
-    left: 0;
-    background: #ffffff; 
-    z-index: 1000;
-}
-
-#back-button {
-    position: absolute;
-    right: 20px; 
-    background-color: #bb74ea;
-    color: white;
-    padding: 10px 20px;
-    border: none;
-    cursor: pointer;
-}
-
 .registration-wrapper {
-    margin-top: 60px;
     position: relative;
     top: 50%;
     left: 50%;
@@ -79,4 +57,24 @@ button:hover {
 #password-error-message, #email-error-message, #registration-success-message {
     color: red;
     text-align: center;
+}
+
+#back-button {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    background-color: #bb74ea;
+    color: white;
+    padding: 15px 30px;
+    border: none;
+    cursor: pointer;
+    border-radius: 10px; /* Rounded corners */
+    z-index: 500;
+    display: inline-block; /* Ensures it takes only necessary space */
+    width: auto; /* Explicitly define width as auto */
+    font-size: 1em; /* Adjust font size as needed for better visibility */
+}
+
+.back-button:hover {
+    opacity: 0.8;
 }
