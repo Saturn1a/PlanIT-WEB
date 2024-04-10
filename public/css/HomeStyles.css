@@ -1,5 +1,6 @@
 body, html {
     height: 100%;
+    max-width: 100%;
     margin: 0;
     font-family: "Press Start 2P", system-ui;
     font-weight: 400;
@@ -8,6 +9,7 @@ body, html {
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
+    overflow-x: hidden;
 }
 
 #logout-btn {
@@ -21,14 +23,12 @@ body, html {
     cursor: pointer;
     border-radius: 10px; /* Rounded corners */
     text-decoration: none;
-  }
-
+}
 
 header {
     background-color: rgba(255, 255, 255, 0.8);
     color: #bb74ea;
     padding: 10px 20px;
-    /* text-align: center; */
 }
 
 header nav a, header nav button {
@@ -46,22 +46,21 @@ header nav a, header nav button {
     font-size: 1em;
 }
 
-
 main {
     display: flex;
-    justify-content: space-between;
+    justify-content: space-between; /* Ensure components are spaced out */
     padding: 20px;
 }
 
 #calendar-container {
-    max-width: 600px;
-    margin: auto;
+    flex: 1; /* Allows the calendar to grow but with a maximum width */
+    max-width: 50%; /* Limits the calendar to half of the main container */
     padding: 20px;
+    margin-right: 20px; /* Adds some space between the calendar and the lists */
     background-color: rgba(255, 255, 255, 0.8);
     box-shadow: 0 0 10px rgba(0,0,0,0.1);
 }
 
-/* Styling for weekdays and days list */
 .weekdays, .days {
     list-style: none; /* Removes default list styling */
     padding: 0;
@@ -84,22 +83,45 @@ main {
     justify-content: center; /* Horizontally centers the content */
 }
 
-/* Additional styles as needed for empty days, etc. */
 .empty-day {
     background-color: #f0f0f0; /* Distinguishes empty days from active days */
 }
 
 #side-content {
-    flex-grow: 1;
     display: flex;
-    flex-direction: column;
+    flex-wrap: wrap;
+    flex: 1;
+    max-width: 50%; /* Ensures side content takes up half of the parent's width */
+    align-items: stretch; /* Stretches children to fill the available height */
 }
 
-.todo-list, .dinner-plans {
-    padding: 20px;
-    background-color: #fff;
+.content-box {
+    flex: 1 1 50%; /* Allows boxes to grow and shrink with a basis of 50% */
+    padding: 10px;
+    margin-bottom: 20px; /* Adds space between rows */
+    background-color: #fff; /* Sets the background color to white */
     box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-    margin-bottom: 20px;
+    overflow-y: auto; /* Enables vertical scrolling if content overflows */
+    box-sizing: border-box;
+    min-height: 150px; /* Sets a minimum height to ensure visual consistency */
+}
+
+/* Targets every 2nd box to remove the right margin, ensuring even spacing */
+.content-box:nth-of-type(2n) {
+    margin-right: 0;
+}
+
+.content-box h3, .content-box ul {
+    background-color: #fff; /* Ensures text and lists are on a white background */
+}
+
+.content-box h3 {
+    font-size: 1em; /* Adjusts the heading size for consistency */
+}
+
+.content-box ul {
+    list-style-type: none; /* Removes bullet points from lists */
+    padding: 0; /* Removes default padding */
 }
 
 footer {
@@ -129,4 +151,16 @@ button {
 
 button:hover {
     background-color: #0056b3;
+}
+
+@media (max-width: 768px) {
+    #side-content {
+        flex-direction: column;
+    }
+
+    .content-box {
+        width: 100%;
+        margin-right: 0; /* Removing right margin for mobile */
+        margin-bottom: 20px; /* Keeping consistent spacing on mobile */
+    }
 }
