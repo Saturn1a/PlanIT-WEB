@@ -12,14 +12,121 @@ body, html {
 
 #logout-btn {
     padding: 10px 20px;
-    background-color: #ffffff;
-    color: rgb(0, 0, 0);
+    background-color: #bb74ea;
+    color: white;
     text-align: center;
     font-family: "Press Start 2P", system-ui;
     font-weight: 400;
     font-style: normal;
     cursor: pointer;
     border-radius: 10px; /* Rounded corners */
-    border: 3px solid rgb(0, 0, 0);
     text-decoration: none;
   }
+
+
+header {
+    background-color: rgba(255, 255, 255, 0.8);
+    color: #bb74ea;
+    padding: 10px 20px;
+    /* text-align: center; */
+}
+
+header nav a, header nav button {
+    color: #bb74ea;
+    text-decoration: none;
+    margin: 0 10px;
+}
+
+#calendar-container > header {
+    background-color: white;
+    color: #bb74ea;
+    padding: 0px 10px;
+    border-radius: 10px; /* Rounded corners */
+    text-align: center;
+    font-size: 1em;
+}
+
+
+main {
+    display: flex;
+    justify-content: space-between;
+    padding: 20px;
+}
+
+#calendar-container {
+    max-width: 600px;
+    margin: auto;
+    padding: 20px;
+    background-color: rgba(255, 255, 255, 0.8);
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+}
+
+/* Styling for weekdays and days list */
+.weekdays, .days {
+    list-style: none; /* Removes default list styling */
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-wrap: wrap; /* Allows items to wrap to the next line */
+}
+
+.weekdays li, .days li {
+    flex: 1 0 14.28%; /* Distributes space evenly among items */
+    text-align: center;
+    border: 1px solid #ddd; /* Adds borders to create "boxes" */
+    box-sizing: border-box; /* Includes padding and border in the element's total width */
+}
+
+.days li {
+    height: 100px; /* Sets a fixed height for day "boxes" */
+    display: flex;
+    align-items: center; /* Vertically centers the content */
+    justify-content: center; /* Horizontally centers the content */
+}
+
+/* Additional styles as needed for empty days, etc. */
+.empty-day {
+    background-color: #f0f0f0; /* Distinguishes empty days from active days */
+}
+
+#side-content {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.todo-list, .dinner-plans {
+    padding: 20px;
+    background-color: #fff;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    margin-bottom: 20px;
+}
+
+footer {
+    background-color: #333;
+    color: white;
+    text-align: center;
+    padding: 10px 20px;
+    margin-top: 20px;
+    width: 100%;
+}
+
+input[type="text"] {
+    font-family: 'Press Start 2P', cursive;
+    padding: 10px;
+    margin: 10px 0;
+    display: block;
+    width: calc(100% - 20px);
+}
+
+button {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #0056b3;
+}
