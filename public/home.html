@@ -20,9 +20,11 @@
 
     <main>
         <section id="calendar-container">
-            <header>
-                <h3>April 2024</h3>
-            </header>
+            <div class="calendar-header">
+                <button id="prev-month">Previous</button>
+                <h3></h3> <!-- Month and Year will be dynamically updated -->
+                <button id="next-month">Next</button>
+            </div>
             <ol class="weekdays">
                 <li>Mon</li>
                 <li>Tue</li>
@@ -38,7 +40,7 @@
         </section>
 
         <aside id="side-content">
-            <section class="content-box" id="todo-list"> <!-- Updated class here -->
+            <section class="content-box" id="todo-list"> 
                 <h3>To-Do List</h3>
                 <ul id="todo-items">
                     <!-- Todo list items will be dynamically added here -->
@@ -47,7 +49,7 @@
                 <button onclick="addTodoItem()">Add Task</button>
             </section>
 
-            <section class="content-box" id="dinner-plans"> <!-- Updated class here -->
+            <section class="content-box" id="dinner-plans">
                 <h3>Dinner Plans</h3>
                 <ul id="dinner-items">
                     <!-- Dinner items will be dynamically added here -->
