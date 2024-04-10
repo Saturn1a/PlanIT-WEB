@@ -38,7 +38,7 @@
         </section>
 
         <aside id="side-content">
-            <section class="todo-list">
+            <section class="content-box" id="todo-list"> <!-- Updated class here -->
                 <h3>To-Do List</h3>
                 <ul id="todo-items">
                     <!-- Todo list items will be dynamically added here -->
@@ -47,10 +47,24 @@
                 <button onclick="addTodoItem()">Add Task</button>
             </section>
 
-            <section class="dinner-plans">
+            <section class="content-box" id="dinner-plans"> <!-- Updated class here -->
                 <h3>Dinner Plans</h3>
                 <ul id="dinner-items">
                     <!-- Dinner items will be dynamically added here -->
+                </ul>
+            </section>
+
+            <section class="content-box" id="shopping-list">
+                <h3>Shopping List</h3>
+                <ul id="shopping-items">
+                    <!-- Shopping list items will be dynamically added here -->
+                </ul>
+            </section>
+
+            <section class="content-box" id="important-dates">
+                <h3>Important Dates</h3>
+                <ul id="dates-items">
+                    <!-- Important dates will be dynamically added here -->
                 </ul>
             </section>
         </aside>
