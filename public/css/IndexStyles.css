@@ -11,12 +11,7 @@ body, html {
   background-repeat: no-repeat;
 }
 
-.header-container {
-  display: flex;
-  justify-content: space-between;
-  padding: 20px;
-  align-items: center;
-}
+
 
 /* Styles for the login form to make it appear inside a centered box */
 #login-form {
@@ -45,8 +40,8 @@ input[type="email"], input[type="password"], button {
 
 button {
   font-family: "Press Start 2P", system-ui;
-    font-weight: 400;
-    font-style: normal;
+  font-weight: 400;
+  font-style: normal;
   background-color: #bb74ea;
   color: white;
   border: none;
@@ -60,4 +55,45 @@ button:hover {
 #error-message {
   color: red;
   text-align: center;
+}
+
+.header-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 0 auto;
+  padding: 0 10px; /* Tilpass padding etter behov for å sikre at innholdet er plassert riktig innenfor sidemargene */
+}
+
+.button {
+  padding: 15px 30px;
+  background-color: #bb74ea;
+  color: white;
+  text-align: center;
+  font-family: "Press Start 2P", system-ui;
+  font-weight: 400;
+  font-style: normal;
+  cursor: pointer;
+  border-radius: 10px; /* Rounded corners */
+  text-decoration: none;
+ 
+}
+
+.button:hover {
+  opacity: 0.8;
+}
+
+h2 {
+  text-align: center;
+  padding: 1rem;
+  margin: 0 auto;
+  background-color: #bb74ea;
+  color: white;
+  max-width: 500px;
+  border-radius: 10px; /* Adds rounded corners to the box */
+  font-family: "Press Start 2P", system-ui;
+  font-weight: 400;
+  font-style: normal;
+    
+  
 }
