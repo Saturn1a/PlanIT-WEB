@@ -48,7 +48,8 @@ header nav a, header nav button {
 
 main {
     display: flex;
-    justify-content: space-between; /* Ensure components are spaced out */
+    align-items: stretch; /* This will make children stretch to fill the container height */
+    justify-content: space-between;
     padding: 20px;
 }
 
@@ -59,6 +60,7 @@ main {
     margin-right: 20px; /* Adds some space between the calendar and the lists */
     background-color: rgba(255, 255, 255, 0.8);
     box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    border-radius: 10px; /* Rounded corners */
 }
 
 .weekdays, .days {
@@ -87,28 +89,35 @@ main {
     background-color: #f0f0f0; /* Distinguishes empty days from active days */
 }
 
+
 #side-content {
     display: flex;
     flex-wrap: wrap;
     flex: 1;
-    max-width: 50%; /* Ensures side content takes up half of the parent's width */
-    align-items: stretch; /* Stretches children to fill the available height */
+    max-width: 50%;
+    justify-content: space-between; /* Adjusts spacing between boxes */
+    align-items: stretch; /* Stretches boxes to fill the available height */
+    margin-left: 20px; /* Ensures space between the calendar and side content */
 }
 
 .content-box {
-    flex: 1 1 50%; /* Allows boxes to grow and shrink with a basis of 50% */
+    flex-basis: calc(50% - 10px); /* Adjusts box size, accounting for margin */
     padding: 10px;
-    margin-bottom: 20px; /* Adds space between rows */
-    background-color: #fff; /* Sets the background color to white */
+    margin-bottom: 20px; /* Space between rows */
+    background-color: #fff;
     box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-    overflow-y: auto; /* Enables vertical scrolling if content overflows */
+    overflow-y: auto;
     box-sizing: border-box;
-    min-height: 150px; /* Sets a minimum height to ensure visual consistency */
+    min-height: 200px; /* Adjust minimum height for better symmetry */
+    border-radius: 10px;
 }
 
-/* Targets every 2nd box to remove the right margin, ensuring even spacing */
 .content-box:nth-of-type(2n) {
     margin-right: 0;
+}
+
+.content-box:nth-of-type(2n+1) {
+    margin-right: 20px; /* Adds right margin to odd instances for spacing */
 }
 
 .content-box h3, .content-box ul {
@@ -125,7 +134,6 @@ main {
 }
 
 footer {
-    background-color: #333;
     color: white;
     text-align: center;
     padding: 10px 20px;
@@ -154,13 +162,15 @@ button:hover {
 }
 
 @media (max-width: 768px) {
-    #side-content {
+    #calendar-container, #side-content {
+        max-width: 100%;
         flex-direction: column;
+        margin-right: 0; /* Adjusts margins for mobile layout */
     }
 
     .content-box {
         width: 100%;
-        margin-right: 0; /* Removing right margin for mobile */
-        margin-bottom: 20px; /* Keeping consistent spacing on mobile */
+        margin-bottom: 20px; /* Consistent bottom margin for all boxes */
+        margin-right: 0; /* Removes right margin for a clean vertical stack */
     }
 }
