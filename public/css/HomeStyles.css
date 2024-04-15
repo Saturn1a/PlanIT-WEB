@@ -34,6 +34,7 @@ header {
     display: flex; /* Enables Flexbox layout */
     justify-content: space-between; /* Spaces out child elements */
     align-items: center; /* Vertically centers child elements */
+    height: 30px;
 }
 
 /* Navigation container styling */
@@ -92,8 +93,14 @@ main {
     background-color: #bb74ea;
     color: white;
     border: none;
-    padding: 5px 10px;
     border-radius: 5px;
+    text-align: center;
+    font-size: 25px; /* Adjust the value as needed */
+    padding-top: 0px;
+    padding-bottom: 0px;
+    padding-left: 3px; /* Maintain left padding */
+    padding-right: 3px; /* Maintain right padding */
+    
 }
 
 #prev-month:hover, #next-month:hover {
@@ -123,9 +130,10 @@ main {
     justify-content: center; /* Horizontally centers the content */
 }
 
+/* CHANGE THE COLOR OF THE EMPTY DAYS
 .empty-day {
-    background-color: #f0f0f0; /* Distinguishes empty days from active days */
-}
+    background-color: #f0f0f0;  
+} */
 
 
 #side-content {
@@ -142,12 +150,15 @@ main {
     flex-basis: calc(50% - 10px); /* Adjusts box size, accounting for margin */
     padding: 10px;
     margin-bottom: 20px; /* Space between rows */
-    background-color: #fff;
+    /*background-color: #fff; */
+    background-color: rgba(255, 255, 255, 0.8);
+    opacity: 0.9;
     box-shadow: 0 2px 4px rgba(0,0,0,0.1);
     overflow-y: auto;
     box-sizing: border-box;
     min-height: 200px; /* Adjust minimum height for better symmetry */
     border-radius: 10px;
+
 }
 
 .content-box:nth-of-type(2n) {
@@ -159,12 +170,25 @@ main {
 }
 
 .content-box h3, .content-box ul {
-    background-color: #fff; /* Ensures text and lists are on a white background */
+    background-color: rgba(255, 255, 255, 0.8);
 }
 
 .content-box h3 {
     font-size: 1em; /* Adjusts the heading size for consistency */
+    background-color: rgba(255, 255, 255, 0.8);
+    text-align: center;
+    color: black;
+    /* purple color for the text in the boxes
+    color: #bb74ea; 
+    */
+    margin: 0 0 20px 0; /* Adds some space below the header, no top margin to avoid extra space */
+    padding: 0; /* No padding to keep the text aligned with the calendar's content */
+    font-size: 1em; /* Makes the header text stand out */
+    background-color: transparent; /* Ensures no background for the header text */
+    border: none; /* Ensures no border around the header text */
+    padding-top: 5px;
 }
+
 
 .content-box ul {
     list-style-type: none; /* Removes bullet points from lists */
