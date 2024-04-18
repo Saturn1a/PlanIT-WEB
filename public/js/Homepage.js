@@ -1,22 +1,25 @@
 document.addEventListener('DOMContentLoaded', function() {
     const addItemInput = document.getElementById('new-todo-item');
-    const todoList = document.getElementById('todo-items');
 
-    // Load existing todos on page load
-    fetchTodos();
+    if (!addItemInput) {
+        console.error('The input element was not found!');
+        return;
+    }
 
-    // Event listener for adding a new todo item by pressing Enter
-    addItemInput.addEventListener('keypress', function(event) {
+    addItemInput.addEventListener('keydown', function(event) {
         if (event.key === 'Enter') {
-            addTodo(addItemInput.value); // Add the todo
-            addItemInput.value = ''; // Clear input after adding
-            event.preventDefault(); // Prevent form submission if it's part of a form
+            event.preventDefault(); // Always call preventDefault for 'Enter'
+            const value = addItemInput.value.trim();
+            if (value) {
+                addTodo(value);
+                addItemInput.value = '';
+            }
         }
     });
 
     // Fetch all todos
     function fetchTodos() {
-        fetch('api/v1/Todo', { credentials: 'include' })
+        fetch('https://localhost:7019/api/v1/Todo?pageNr=1&pageSize=10', { credentials: 'include' })
             .then(response => response.json())
             .then(data => {
                 data.forEach(todo => {
@@ -29,7 +32,7 @@ document.addEventListener('DOMContentLoaded', function() {
     // Add a new todo
     function addTodo(description) {
         if (!description.trim()) return; // Prevent adding empty todos
-        fetch('api/v1/Todo/register', {
+        fetch('https://localhost:7019/api/v1/Todo/register', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -61,7 +64,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Delete a todo
     function deleteTodo(id, liElement) {
-        fetch(`api/v1/Todo/${id}`, {
+        fetch(`https://localhost:7019/api/v1/Todo/${id}`, {
             method: 'DELETE',
             credentials: 'include'
         })
