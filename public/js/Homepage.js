@@ -1,5 +1,6 @@
 document.addEventListener('DOMContentLoaded', function() {
-    const addItemInput = document.getElementById('new-todo-item');
+    const todoList = document.getElementById('todo-items'); // Ensure this element is defined
+    const addItemInput = document.getElementById('new-todo-item'); // Input for adding new todo
 
     if (!addItemInput) {
         console.error('The input element was not found!');
@@ -8,19 +9,23 @@ document.addEventListener('DOMContentLoaded', function() {
 
     addItemInput.addEventListener('keydown', function(event) {
         if (event.key === 'Enter') {
-            event.preventDefault(); // Always call preventDefault for 'Enter'
+            event.preventDefault(); // Prevent form submission with Enter key
             const value = addItemInput.value.trim();
             if (value) {
                 addTodo(value);
-                addItemInput.value = '';
+                addItemInput.value = ''; // Clear the input after adding
             }
         }
     });
 
-    // Fetch all todos
     function fetchTodos() {
         fetch('https://localhost:7019/api/v1/Todo?pageNr=1&pageSize=10', { credentials: 'include' })
-            .then(response => response.json())
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok ' + response.statusText);
+                }
+                return response.json();
+            })
             .then(data => {
                 data.forEach(todo => {
                     createTodoElement(todo.id, todo.description);
@@ -29,9 +34,7 @@ document.addEventListener('DOMContentLoaded', function() {
             .catch(error => console.error('Error fetching todos:', error));
     }
 
-    // Add a new todo
     function addTodo(description) {
-        if (!description.trim()) return; // Prevent adding empty todos
         fetch('https://localhost:7019/api/v1/Todo/register', {
             method: 'POST',
             headers: {
@@ -43,17 +46,19 @@ document.addEventListener('DOMContentLoaded', function() {
         })
         .then(response => response.json())
         .then(todo => {
-            createTodoElement(todo.id, todo.description);
+            if (todo && todo.id && todo.description) {
+                createTodoElement(todo.id, todo.description);
+            } else {
+                throw new Error('Invalid todo data received');
+            }
         })
         .catch(error => console.error('Error adding todo:', error));
     }
 
-    // Create a todo list item element
     function createTodoElement(id, description) {
         const li = document.createElement('li');
         li.textContent = description;
 
-        // Delete button for the todo
         const deleteBtn = document.createElement('button');
         deleteBtn.textContent = 'Delete';
         deleteBtn.onclick = function() { deleteTodo(id, li); };
@@ -62,7 +67,6 @@ document.addEventListener('DOMContentLoaded', function() {
         todoList.appendChild(li);
     }
 
-    // Delete a todo
     function deleteTodo(id, liElement) {
         fetch(`https://localhost:7019/api/v1/Todo/${id}`, {
             method: 'DELETE',
@@ -71,8 +75,13 @@ document.addEventListener('DOMContentLoaded', function() {
         .then(response => {
             if (response.ok) {
                 liElement.remove();
+            } else {
+                throw new Error('Failed to delete the todo.');
             }
         })
         .catch(error => console.error('Error deleting todo:', error));
     }
+
+    // Initialize fetching todos when page loads
+    fetchTodos();
 });

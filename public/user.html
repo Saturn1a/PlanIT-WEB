@@ -9,16 +9,23 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
 </head>
-<header>
-    <nav>
-        <a href="home.html">HOME</a>
-        <a href="user.html">PROFILE</a>
-        <a href="event.html">EVENT</a>
-        <a href="contacts.html">CONTACTS</a>
-        <!-- Additional navigation links -->
-    </nav>
-</header>
 <body>
+    <header>
+        <nav>
+            <a href="home.html">HOME</a>
+            <a href="user.html">PROFILE</a>
+            <a href="event.html">EVENT</a>
+            <a href="contacts.html">CONTACTS</a>
+            <!-- Additional navigation links -->
+        </nav>
+    </header>
+    <div id="error-message" style="display: none; color: red; font-size: 16px; text-align: center;"></div>
+    <div id="user-profile">
+        <h3>User Profile</h3>
+        <p><strong>Name:</strong> <span id="profile-name"></span></p>
+        <p><strong>Email:</strong> <span id="profile-email"></span></p>
+        <!-- Add more fields as necessary -->
+    </div>
     <div class="registration-wrapper">
         <div class="registration-container">
             <form id="registration-form">
@@ -36,11 +43,11 @@
                 <div>
                     
                 <button type="submit">Update</button>
-                <button type="submit">Delete</button>
+                <button type="button">Delete</button>
             </form>
             <div id="update-success-message"></div>
         </div>
     </div>
-    <script src="js/registerPage.js"></script>
+    <script src="js/users.js"> </script>
 </body>
 </html>
