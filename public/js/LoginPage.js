@@ -20,21 +20,20 @@ document.getElementById('login-btn').addEventListener('click', function(e) {
     })
     .then(response => {
         if (!response.ok) {
-            throw new Error('Login failed');
+            response.json().then(data => {
+                throw new Error(data.message || 'Login failed due to server error'); // Assuming the server sends a message property
+            });
         }
         return response.json();
     })
     .then(data => {
         console.log('Success:', data);
-        // Lagre token i sessionStorage
-        sessionStorage.setItem('authToken', data.Token);
-        // Omdiriger brukeren til en ny side etter vellykket innlogging
+        localStorage.setItem('authToken', data.Token);
         window.location.href = 'home.html';
     })
     .catch((error) => {
         console.error('Error:', error);
-        alert(error.message); // Viser en feilmelding til brukeren
-        //errorMessage.textContent = 'Wrong password'; // Generic message
-        //errorMessage.style.color = 'black';
+        errorMessage.textContent = error.message; // Display more user-friendly error messages
+        errorMessage.style.color = 'red'; // Make the error visually distinctive
     });
 });
