@@ -5,43 +5,41 @@ document.addEventListener("DOMContentLoaded", function() {
 
 function fetchUserProfile() {
     const token = localStorage.getItem('authToken');
+    console.log("Retrieved token:", token);  // Log to verify the token
 
     if (!token) {
-        console.error("No token available. Please log in again.");
-        displayError("Session has expired. Please log in again.");  // Display error message on the page
+        console.error("No token available.");
+        displayError("Please log in to view your profile.");
         return;
     }
 
     fetch('https://localhost:7019/api/v1/Users/profile', {
         method: 'GET',
-        credentials: 'include',
         headers: {
             'Content-Type': 'application/json',
             'Authorization': `Bearer ${token}`
         }
     })
     .then(response => {
-        if (response.status === 401) {
-            console.error('Unauthorized access. Session may be invalid or expired.');
-            displayError("Your session has expired or is invalid. Please log in again."); // Friendly error message
-            sessionStorage.clear();
-            return;
-        }
         if (!response.ok) {
+            if (response.status === 401) {
+                console.error('Unauthorized access. Session may be invalid or expired.');
+                displayError("Unauthorized access. Please verify if your session is still valid.");
+                return;
+            }
             throw new Error(`Failed to fetch user profile. Status: ${response.status}`);
         }
         return response.json();
     })
     .then(user => {
-        if (user) {
-            displayUserProfile(user);
-        } else {
+        if (!user) {
             throw new Error('User data is undefined.');
         }
+        displayUserProfile(user);
     })
     .catch(error => {
         console.error('Error fetching user profile:', error);
-        displayError("An error occurred while fetching profile data. Please try again.");  // Friendly user message
+        displayError(error.message);  // Displays the error message based on the caught exception
     });
 }
 
@@ -53,11 +51,12 @@ function displayUserProfile(user) {
 function displayError(message) {
     const errorContainer = document.getElementById('error-message');
     errorContainer.textContent = message;
-    errorContainer.style.display = 'block';  // Make sure this element is visible
+    errorContainer.style.display = 'block';  // Ensures the error message is visible
 }
 
 function bindFormEvent() {
-    document.getElementById('registration-form').addEventListener('submit', function(e) {
+    const form = document.getElementById('registration-form');
+    form.addEventListener('submit', function(e) {
         e.preventDefault();
 
         const name = document.getElementById('name').value;
@@ -79,11 +78,13 @@ function bindFormEvent() {
         }
 
         const userData = { name, email };
+        const token = localStorage.getItem('authToken');
 
         fetch('https://localhost:7019/api/v1/Users/', {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`
             },
             body: JSON.stringify(userData),
         })
@@ -95,14 +96,10 @@ function bindFormEvent() {
         })
         .then(data => {
             document.getElementById('update-success-message').textContent = "Updated user information successfully.";
-            // Redirect to login page or profile page after a delay
-            setTimeout(() => {
-                window.location.href = 'user.html'; // redirect back to the profile page or another relevant page
-            }, 2000);
         })
         .catch(error => {
             console.error('Error:', error);
-            document.getElementById('update-success-message').textContent = "Failed to update user.";
+            document.getElementById('update-success-message').textContent = error.message;
         });
     });
 }

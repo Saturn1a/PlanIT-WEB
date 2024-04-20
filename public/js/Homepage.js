@@ -1,6 +1,6 @@
 document.addEventListener('DOMContentLoaded', function() {
-    const todoList = document.getElementById('todo-items'); // Ensure this element is defined
-    const addItemInput = document.getElementById('new-todo-item'); // Input for adding new todo
+    const todoList = document.getElementById('todo-items');
+    const addItemInput = document.getElementById('new-todo-item');
 
     if (!addItemInput) {
         console.error('The input element was not found!');
@@ -9,77 +9,90 @@ document.addEventListener('DOMContentLoaded', function() {
 
     addItemInput.addEventListener('keydown', function(event) {
         if (event.key === 'Enter') {
-            event.preventDefault(); // Prevent form submission with Enter key
+            event.preventDefault();
             const value = addItemInput.value.trim();
             if (value) {
                 addTodo(value);
-                addItemInput.value = ''; // Clear the input after adding
+                addItemInput.value = '';  // Clear input after adding
             }
         }
     });
 
     function fetchTodos() {
-        fetch('https://localhost:7019/api/v1/Todo?pageNr=1&pageSize=10', { credentials: 'include' })
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error('Network response was not ok ' + response.statusText);
-                }
-                return response.json();
-            })
-            .then(data => {
-                data.forEach(todo => {
-                    createTodoElement(todo.id, todo.description);
-                });
-            })
-            .catch(error => console.error('Error fetching todos:', error));
+        const authToken = localStorage.getItem('authToken');
+        fetch('https://localhost:7019/api/v1/Todo?pageNr=1&pageSize=10', {
+            method: 'GET',
+            headers: {
+                'Authorization': 'Bearer ' + authToken
+            },
+            credentials: 'include'
+        })
+        .then(response => response.json())
+        .then(data => {
+            data.forEach(todo => {
+                createTodoElement(todo.id, todo.description);
+            });
+        })
+        .catch(error => console.error('Error fetching todos:', error));
     }
 
     function addTodo(description) {
+        const authToken = localStorage.getItem('authToken');
         fetch('https://localhost:7019/api/v1/Todo/register', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
-                'Accept': 'application/json'
+                'Accept': 'application/json',
+                'Authorization': 'Bearer ' + authToken
             },
-            body: JSON.stringify({ description: description }),
+            body: JSON.stringify({ name: description }), // Adjusted to match server expectations
             credentials: 'include'
         })
         .then(response => response.json())
-        .then(todo => {
-            if (todo && todo.id && todo.description) {
-                createTodoElement(todo.id, todo.description);
+        .then(data => {
+            if (data && data.id && data.name) { // Adjusted to match the ToDoDTO structure
+                createTodoElement(data.id, data.name);
             } else {
                 throw new Error('Invalid todo data received');
             }
         })
-        .catch(error => console.error('Error adding todo:', error));
+        .catch(error => {
+            console.error('Error adding todo:', error);
+            alert('Failed to add todo: ' + error.message);  // Show user-friendly error message
+        });
     }
 
-    function createTodoElement(id, description) {
+    function createTodoElement(id, name) { // Updated to use name instead of description
         const li = document.createElement('li');
-        li.textContent = description;
+        li.textContent = name; // Display the name
 
         const deleteBtn = document.createElement('button');
         deleteBtn.textContent = 'Delete';
-        deleteBtn.onclick = function() { deleteTodo(id, li); };
+        deleteBtn.onclick = () => deleteTodo(id, li);
 
         li.appendChild(deleteBtn);
         todoList.appendChild(li);
     }
 
     function deleteTodo(id, liElement) {
+        const authToken = localStorage.getItem('authToken');
         fetch(`https://localhost:7019/api/v1/Todo/${id}`, {
             method: 'DELETE',
+            headers: {
+                'Authorization': 'Bearer ' + authToken
+            },
             credentials: 'include'
         })
         .then(response => {
-            if (response.ok) {
-                liElement.remove();
-            } else {
-                throw new Error('Failed to delete the todo.');
+            if (!response.ok) {
+                throw new Error('Failed to delete the todo');
             }
+            liElement.remove();
         })
-        .catch(error => console.error('Error deleting todo:', error));
+        .catch(error => {
+            console.error('Error deleting todo:', error);
+            alert('Failed to delete todo: ' + error.message);  // Show user-friendly error message
+        });
     }
 
     // Initialize fetching todos when page loads
