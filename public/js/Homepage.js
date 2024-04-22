@@ -1,6 +1,7 @@
 document.addEventListener('DOMContentLoaded', function() {
     const todoList = document.getElementById('todo-items');
     const addItemInput = document.getElementById('new-todo-item');
+    const shoppingList = document.getElementById('new-shopping-item')
 
     if (!addItemInput) {
         console.error('The input element was not found!');
@@ -67,8 +68,9 @@ document.addEventListener('DOMContentLoaded', function() {
         li.textContent = name; // Display the name
 
         const deleteBtn = document.createElement('button');
-        deleteBtn.textContent = 'Delete';
+        deleteBtn.textContent = '✖';
         deleteBtn.onclick = () => deleteTodo(id, li);
+        deleteBtn.className = 'delete-button';
 
         li.appendChild(deleteBtn);
         todoList.appendChild(li);

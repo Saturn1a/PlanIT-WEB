@@ -26,6 +26,11 @@ body, html {
     text-decoration: none;
 }
 
+#logout-btn:hover {
+    background-color: #a06cd5;
+}
+
+
 /* General header styling */
 header {
     background-color: rgba(255, 255, 255, 0.8);
@@ -150,14 +155,14 @@ main {
     flex-basis: calc(50% - 10px); /* Adjusts box size, accounting for margin */
     padding: 10px;
     margin-bottom: 20px; /* Space between rows */
-    /*background-color: #fff; */
     background-color: rgba(255, 255, 255, 0.8);
     opacity: 0.9;
     box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-    overflow-y: auto;
+    
     box-sizing: border-box;
     min-height: 200px; /* Adjust minimum height for better symmetry */
     border-radius: 10px;
+    
 
 }
 
@@ -193,6 +198,7 @@ main {
 .content-box ul {
     list-style-type: none; /* Removes bullet points from lists */
     padding: 0; /* Removes default padding */
+    background-color: transparent;
 }
 
 footer {
@@ -205,6 +211,7 @@ footer {
 
 input[type="text"] {
     font-family: 'Press Start 2P', cursive;
+    background-color: rgba(255, 255, 255, 0.8);
     padding: 10px;
     margin: 10px 0;
     display: block;
@@ -212,16 +219,18 @@ input[type="text"] {
 }
 
 button {
-    background-color: #007bff;
-    color: white;
+    background-color: transparent;
+    color: red;
     border: none;
     padding: 10px 20px;
     cursor: pointer;
 }
-
+/*
 button:hover {
     background-color: #0056b3;
 }
+*/
+
 
 @media (max-width: 768px) {
     #calendar-container, #side-content {
@@ -258,6 +267,7 @@ button:hover {
 }
 
 #todo-list ul {
+    background-color: rgba(255, 255, 255, 0.8);
     list-style-type: none;
     padding: 0;
     margin: 0;
@@ -275,13 +285,16 @@ button:hover {
 }
 
 #todo-list li.completed {
+    background-color: rgba(255, 255, 255, 0.8);
     text-decoration: line-through;
     color: #bbb;
 }
 
+
 #todo-list li button {
     margin-left: 10px;
     background-color: #ff4747;
+    background-color: rgba(255, 255, 255, 0.8);
     border: none;
     color: white;
     padding: 5px 10px;
@@ -289,7 +302,18 @@ button:hover {
     cursor: pointer;
 }
 
+
+/*
 #todo-list li button:hover {
     background-color: #ff2121;
 }
+
+.delete-button {
+    background-color: rgba(255, 255, 255, 0.8);
+    color: red;
+    border: none;
+    cursor: pointer;
+}*/
+
+
 }
