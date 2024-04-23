@@ -1,10 +1,9 @@
 document.addEventListener('DOMContentLoaded', function() {
     const todoList = document.getElementById('todo-items');
     const addItemInput = document.getElementById('new-todo-item');
-    const shoppingList = document.getElementById('new-shopping-item')
 
-    if (!addItemInput) {
-        console.error('The input element was not found!');
+    if (!todoList || !addItemInput) {
+        console.error('Essential element not found!');
         return;
     }
 
@@ -19,7 +18,7 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 
-    function addTodo(description) {
+    function addTodo(Name) {
         const authToken = localStorage.getItem('authToken');
         fetch('https://localhost:7019/api/v1/Todo/register', {
             method: 'POST',
@@ -28,7 +27,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 'Accept': 'application/json',
                 'Authorization': 'Bearer ' + authToken
             },
-            body: JSON.stringify({ name: description }), // Adjusted to match server expectations
+            body: JSON.stringify({ name: Name }), // Adjusted to match server expectations
             credentials: 'include'
         })
         .then(response => response.json())
@@ -54,23 +53,33 @@ document.addEventListener('DOMContentLoaded', function() {
             },
             credentials: 'include'
         })
-        .then(response => response.json())
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Failed to fetch todos: ' + response.statusText);
+            }
+            return response.json();
+        })
         .then(data => {
+            console.log('Todo data:', data); // Add this to see what data is actually returned
+            todoList.innerHTML = '';  // Clear the list before appending new items
             data.forEach(todo => {
-                createTodoElement(todo.id, todo.description);
+                createTodoElement(todo.id, todo.name); // Adjusted to correct property name
             });
         })
-        .catch(error => console.error('Error fetching todos:', error));
+        .catch(error => {
+            console.error('Error fetching todos:', error);
+            alert('Failed to load todos: ' + error.message);
+        });
     }
 
-    function createTodoElement(id, name) { // Updated to use name instead of description
+    function createTodoElement(id, name) {
         const li = document.createElement('li');
         li.textContent = name; // Display the name
 
         const deleteBtn = document.createElement('button');
         deleteBtn.textContent = '✖';
-        deleteBtn.onclick = () => deleteTodo(id, li);
         deleteBtn.className = 'delete-button';
+        deleteBtn.onclick = () => deleteTodo(id, li);
 
         li.appendChild(deleteBtn);
         todoList.appendChild(li);
