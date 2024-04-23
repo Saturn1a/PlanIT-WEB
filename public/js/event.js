@@ -1,35 +1,76 @@
-async function getListsData() {
-    try {
-      // Replace 'YOUR_API_URL' with the actual URL of your API's "get all" endpoint
-      const response = await fetch('https://localhost:7019/api/v1/Events?pageNr=1&pageSize=10');
-      
-  
-      if (!response.ok) {
-        throw new Error(`API call failed with status ${response.status}`);
-      }
-  
-      const data = await response.json();
-      return data;
-    } catch (error) {
-      console.error('Error fetching data:', error);
-      // Handle errors appropriately, like displaying an error message to the user
-    }
+document.addEventListener('DOMContentLoaded', function() {
+  const eventList = document.getElementById('eventList');
+  eventName.className = 'event-name'; // Assign a class for styling
+  //const inviteList = document.getElementById('inviteList');
+
+ 
+
+  // Function to fetch events
+  function fetchEvents() {
+      const authToken = localStorage.getItem('authToken');
+      fetch('https://localhost:7019/api/v1/Events?pageNr=1&pageSize=10', {
+          method: 'GET',
+          headers: {
+              'Authorization': 'Bearer ' + authToken
+          },
+          credentials: 'include'
+      })
+      .then(response => {
+          if (!response.ok) {
+              throw new Error('Failed to fetch events: ' + response.statusText);
+          }
+          return response.json();
+      })
+      .then(data => {
+          console.log('Event data:', data);
+          eventList.innerHTML = '';  // Clear the list before appending new items
+          data.forEach(event => {
+              createEventElement(event.id, event.name);
+          });
+      })
+      .catch(error => {
+          console.error('Error fetching events:', error);
+          alert('Failed to load events: ' + error.message);
+      });
   }
 
-  async function populateEventsList() {
-    const eventsData = await getListsData(); // Assuming your API returns events data
-  
-    const eventListElement = document.getElementById('eventList');
-  
-  
-    // Loop through events data and create list items
-    eventsData.forEach(event => {
-      const listItem = document.createElement('li');
-      listItem.textContent = event.name; // Replace with appropriate property for event name
-      eventListElement.appendChild(listItem);
-    });
+  // Function to create event element
+  function createEventElement(id, name) {
+      const li = document.createElement('li');
+      li.textContent = name;
+
+      const deleteBtn = document.createElement('button');
+      deleteBtn.textContent = '✖';
+      deleteBtn.className = 'delete-button';
+      deleteBtn.onclick = () => deleteEvent(id, li);
+
+      li.appendChild(deleteBtn);
+      eventList.appendChild(li);
+
   }
-  
-  // Call the populateEventsList function when the page loads
-  populateEventsList();
-  
+
+  // Function to delete an event
+  function deleteEvent(id, liElement) {
+      const authToken = localStorage.getItem('authToken');
+      fetch(`https://localhost:7019/api/v1/Events/${id}`, {
+          method: 'DELETE',
+          headers: {
+              'Authorization': 'Bearer ' + authToken
+          },
+          credentials: 'include'
+      })
+      .then(response => {
+          if (!response.ok) {
+              throw new Error('Failed to delete the event');
+          }
+          liElement.remove();
+      })
+      .catch(error => {
+          console.error('Error deleting event:', error);
+          alert('Failed to delete event: ' + error.message);
+      });
+  }
+
+  fetchEvents();
+
+});
