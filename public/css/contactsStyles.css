@@ -1,116 +1,113 @@
 body, html {
-    height: 100%;
-    max-width: 100%;
-    margin: 0;
-    font-family: "Press Start 2P", system-ui;
-    font-weight: 400;
-    font-style: normal;
-    background-image: url('../images/space_background_pixel_art.jpeg');
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: cover;
-    overflow-x: hidden;
+  height: 100%;
+  margin: 0;
+  font-family: "Press Start 2P", system-ui;
+  font-weight: 400;
+  font-style: normal;
+  background-image: url('../images/space_background_pixel_art.jpeg');
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-attachment: fixed;
 }
 
-
+/* General header styling */
 header {
-    background-color: rgba(255, 255, 255, 0.8);
-    color: #bb74ea;
-    padding: 10px 20px;
-    display: flex; /* Enables Flexbox layout */
-    justify-content: space-between; /* Spaces out child elements */
-    align-items: center; /* Vertically centers child elements */
-    height: 30px;
-  }
-  
-  /* Navigation container styling */
-  nav {
-    width: 100%; /* Ensures the nav container fills the entire header */
-    display: flex;
-    align-items: center;
-  }
-  
-  /* Styling for navigation links */
-  nav a {
-    color: #bb74ea;
-    text-decoration: none;
-    margin-right: 20px; /* Adds space between multiple navigation links */
-  }
-
-
-
-.contact-wrapper {
-    position: relative;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 90%;
-    max-width: 400px;
-    display: flex; /* Enables Flexbox layout */
-    
-}
-.form-container {
-    background-color: rgba(255, 255, 255, 0.8);
-    padding: 20px;
-    position: relative;
-    border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    display: flex; /* Enables Flexbox layout */
-  }
-
-
-.content-list {
-    background-color: rgba(255, 255, 255, 0.8);
-    padding: 20px;
-    display: flex;
-    border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    display: flex; /* Enables Flexbox layout */
-
+  background-color: rgba(255, 255, 255, 0.8);
+  color: #bb74ea;
+  padding: 10px 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 30px;
 }
 
-.contact-section {
-    display: flex; /* Enables Flexbox layout */
-  }
-
-
-
-
-
-input[type=text], input[type=email] {
-    width: 100%;
-    padding: 12px 20px;
-    margin: 8px 0;
-    display: inline-block;
-    border: 1px solid #ccc;
-    box-sizing: border-box;
-    border-radius: 4px;
+/* Navigation container styling */
+nav {
+  width: 100%;
+  display: flex;
+  align-items: center;
 }
 
+/* Styling for navigation links */
+nav a {
+  color: #bb74ea;
+  text-decoration: none;
+  margin-right: 20px;
+}
 
+.boxes-container {
+  display: flex;
+  justify-content: center;
+  max-width: 800px;
+  margin: 0 auto;
+  margin-top: 100px;
+  gap: 20px;
+}
+
+.box {
+  flex: 1;
+  margin: 10px;
+  padding: 15px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  background-color: rgba(255, 255, 255, 0.8);
+  max-height: 400px; /* Set a max-height for the boxes */
+  overflow-y: auto; /* Enables vertical scrolling */
+  overflow-x: hidden;
+}
+
+.box h2 {
+  margin-bottom: 10px;
+}
+
+form label {
+  display: block;
+  margin-bottom: 2px;
+}
+
+input[type="text"], input[type="email"] {
+  width: 100%;
+  padding: 12px 20px;
+  margin: 8px 0;
+  font-family: "Press Start 2P", system-ui;
+  font-weight: 400;
+  font-style: normal;
+  display: inline-block;
+  border: 1px solid #ccc;
+  box-sizing: border-box;
+  border-radius: 4px;
+}
 
 button {
-    font-family: "Press Start 2P", system-ui;
-    font-weight: 400;
-    font-style: normal;
-    background-color: #bb74ea;
-    color: white;
-    padding: 14px 20px;
-    margin: 8px 0;
-    border: none;
-    cursor: pointer;
-    width: 100%;
-    border-radius: 4px;
+  font-family: "Press Start 2P", system-ui;
+  font-weight: 400;
+  font-style: normal;
+  background-color: #bb74ea;
+  color: white;
+  padding: 14px 20px;
+  margin: 8px 0;
+  border: none;
+  cursor: pointer;
+  width: 100%;
+  border-radius: 4px;
+}
+
+.delete-button {
+  background-color: transparent;
+  color: red;
+  border: none;
+  padding: 10px 20px;
+  cursor: pointer;
 }
 
 button:hover {
-    opacity: 0.8;
+  opacity: 0.8;
 }
 
-#password-error-message, #email-error-message, #registration-success-message {
-    color: red;
-    text-align: center;
+#contact-list {
+  list-style-type: none; /* Removes bullet points */
+  padding: 0; /* Removes default padding */
+  margin: 0; /* Adjusts margin as needed, depending on your layout */
 }
-
-
 

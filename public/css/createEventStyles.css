@@ -10,6 +10,34 @@ body, html {
     background-size: cover;
 }
 
+/* General header styling */
+header {
+    background-color: rgba(255, 255, 255, 0.8);
+    color: #bb74ea;
+    padding: 10px 20px;
+    display: flex; /* Enables Flexbox layout */
+    justify-content: space-between; /* Spaces out child elements */
+    align-items: center; /* Vertically centers child elements */
+    height: 30px;
+  }
+  
+  /* Navigation container styling */
+  nav {
+    width: 100%; /* Ensures the nav container fills the entire header */
+    display: flex;
+    align-items: center;
+  }
+  
+  /* Styling for navigation links */
+  nav a {
+    color: #bb74ea;
+    text-decoration: none;
+    margin-right: 20px; /* Adds space between multiple navigation links */
+  }
+  
+
+
+
 .event-wrapper {
     position: relative;
     top: 50%;
