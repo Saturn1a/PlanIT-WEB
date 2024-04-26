@@ -20,7 +20,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     function addShopping(Name) {
         const authToken = localStorage.getItem('authToken');
-        fetch('https://localhost:7019/api/v1/ShoppingList/register', {
+        fetch('https://localhost:7019/api/v1/ShoppingLists/register', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -46,7 +46,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     function fetchShoppingList() {
         const authToken = localStorage.getItem('authToken');
-        fetch('https://localhost:7019/api/v1/ShoppingList?pageNr=1&pageSize=10', {
+        fetch('https://localhost:7019/api/v1/ShoppingLists?pageNr=1&pageSize=10', {
             method: 'GET',
             headers: {
                 'Authorization': 'Bearer ' + authToken
@@ -87,7 +87,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     function deleteShoppingList(id, liElement) {
         const authToken = localStorage.getItem('authToken');
-        fetch(`https://localhost:7019/api/v1/ShoppingList/${id}`, {
+        fetch(`https://localhost:7019/api/v1/ShoppingLists/${id}`, {
             method: 'DELETE',
             headers: {
                 'Authorization': 'Bearer ' + authToken

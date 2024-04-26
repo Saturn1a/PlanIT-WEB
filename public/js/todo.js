@@ -20,7 +20,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     function addTodo(Name) {
         const authToken = localStorage.getItem('authToken');
-        fetch('https://localhost:7019/api/v1/Todo/register', {
+        fetch('https://localhost:7019/api/v1/Todos/register', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -46,7 +46,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     function fetchTodos() {
         const authToken = localStorage.getItem('authToken');
-        fetch('https://localhost:7019/api/v1/Todo?pageNr=1&pageSize=10', {
+        fetch('https://localhost:7019/api/v1/Todos?pageNr=1&pageSize=10', {
             method: 'GET',
             headers: {
                 'Authorization': 'Bearer ' + authToken
@@ -87,7 +87,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     function deleteTodo(id, liElement) {
         const authToken = localStorage.getItem('authToken');
-        fetch(`https://localhost:7019/api/v1/Todo/${id}`, {
+        fetch(`https://localhost:7019/api/v1/Todos/${id}`, {
             method: 'DELETE',
             headers: {
                 'Authorization': 'Bearer ' + authToken

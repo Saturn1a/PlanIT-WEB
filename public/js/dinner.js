@@ -16,7 +16,7 @@ document.getElementById("submitDinners").addEventListener("click", function() {
 
     const authToken = localStorage.getItem('authToken');
 
-    fetch('https://localhost:7019/api/v1/Dinner/register-weekly-plan', {
+    fetch('https://localhost:7019/api/v1/Dinners/register-weekly-plan', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
