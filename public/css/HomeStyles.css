@@ -251,6 +251,7 @@ button:hover {
 }
 
 
+
 #dinner-plans #dinner-items li {
     display: flex;
     align-items: center;
@@ -269,6 +270,33 @@ button:hover {
     margin: 0;
     border-radius: 10px;  /* Adds rounded corners to the input */
     border: 1px solid #ccc; /* Optional: adds a subtle border for better visual separation */
+}
+
+#dinner-plans .week-navigation {
+    display: flex; /* Enables flexbox */
+    justify-content: space-between; /* Distributes space evenly between the elements */
+    align-items: center; /* Aligns items vertically in the center */
+    margin: 10px 0; /* Adds vertical space around the navigation */
+}
+
+#prevWeek, #nextWeek {
+    cursor: pointer;
+    background-color: #bb74ea;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 18px; /* Smaller font size for better fit */
+    padding: 1px 8px; /* Adjust padding for better visual */
+}
+
+#prevWeek:hover, #nextWeek:hover {
+    background-color: #a06cd5;
+}
+
+#weekLabel {
+    flex-grow: 1; /* Allows the week label to take up any extra space */
+    text-align: center; /* Centers the text inside the span */
+    font-size: 14px; /* Larger font size for emphasis */
 }
 
 

@@ -53,37 +53,46 @@
 
             <section class="content-box" id="dinner-plans">
                 <h3>Dinner Plans</h3>
+                <!-- Week Navigation Controls -->
+                <div class="week-navigation">
+                    <button id="prevWeek">⬅</button>
+                    <span id="weekLabel"></span>
+                    <button id="nextWeek">➡</button>
+                </div>
                 <ul id="dinner-items">
                     <li>
                         <label for="monday">MON</label>
-                        <input type="text" id="monday" class="dinner-item" placeholder="Monday">
+                        <input type="text" id="monday" class="dinner-item" placeholder="Monday" aria-label="Monday Dinner">
                     </li>
                     <li>
                         <label for="tuesday">TUE</label>
-                        <input type="text" id="tuesday" class="dinner-item" placeholder="Tuesday">
+                        <input type="text" id="tuesday" class="dinner-item" placeholder="Tuesday" aria-label="Tuesday Dinner">
                     </li>
                     <li>
                         <label for="wednesday">WED</label>
-                        <input type="text" id="wednesday" class="dinner-item" placeholder="Wednesday">
+                        <input type="text" id="wednesday" class="dinner-item" placeholder="Wednesday" aria-label="Wednesday Dinner">
                     </li>
                     <li>
                         <label for="thursday">THU</label>
-                        <input type="text" id="thursday" class="dinner-item" placeholder="Thursday">
+                        <input type="text" id="thursday" class="dinner-item" placeholder="Thursday" aria-label="Thursday Dinner">
                     </li>
                     <li>
                         <label for="friday">FRI</label>
-                        <input type="text" id="friday" class="dinner-item" placeholder="Friday">
+                        <input type="text" id="friday" class="dinner-item" placeholder="Friday" aria-label="Friday Dinner">
                     </li>
                     <li>
                         <label for="saturday">SAT</label>
-                        <input type="text" id="saturday" class="dinner-item" placeholder="Saturday">
+                        <input type="text" id="saturday" class="dinner-item" placeholder="Saturday" aria-label="Saturday Dinner">
                     </li>
                     <li>
                         <label for="sunday">SUN</label>
-                        <input type="text" id="sunday" class="dinner-item" placeholder="Sunday">
+                        <input type="text" id="sunday" class="dinner-item" placeholder="Sunday" aria-label="Sunday Dinner">
                     </li>
                 </ul>
+                <!-- Place for messages or errors -->
+                <div id="feedback" role="alert" style="color: red;"></div>
             </section>
+            
 
             <section class="content-box" id="shopping-list">
                 <h3>Shopping List</h3>
@@ -110,6 +119,7 @@
         <!-- Footer content -->
     </footer>
 <script src="js/app.js"></script>
+<script src="js/utilityFunctions.js"></script> <!-- getCurrentWeekDateRange defined here -->
 <script src="js/calendar.js"></script>
 <script src="js/todo.js"></script>
 <script src="js/shoppinglist.js"></script>
