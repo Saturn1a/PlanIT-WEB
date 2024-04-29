@@ -3,8 +3,8 @@ body, html {
   height: 100%;
   margin: 0;
   font-family: "Press Start 2P", system-ui;
-    font-weight: 400;
-    font-style: normal;
+  font-weight: 400;
+  font-style: normal;
   background-image: url('../images/space_background_pixel_art.jpeg'); /* Update path accordingly */
   background-size: cover;
   background-position: center;
@@ -39,6 +39,7 @@ input[type="email"], input[type="password"], button {
   border: 1px solid #ccc;
   border-radius: 10px;
   box-sizing: border-box;
+  
 }
 
 button {
@@ -61,11 +62,10 @@ button:hover {
 }
 
 .header-container {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin: 0 auto;
-  padding: 0 10px; /* Tilpass padding etter behov for å sikre at innholdet er plassert riktig innenfor sidemargene */
+  display: flex; /* Use flexbox for layout */
+  justify-content: flex-end; /* Aligns the child element(s) to the end of the container */
+  padding: 1rem; /* Add padding as needed */
+  /* Add any other styles you need for the header container */
 }
 
 .button {
@@ -92,11 +92,12 @@ h2 {
   margin: 0 auto;
   background-color: #bb74ea;
   color: white;
-  max-width: 500px;
+  max-width: 300px;
   border-radius: 10px; /* Adds rounded corners to the box */
   font-family: "Press Start 2P", system-ui;
   font-weight: 400;
   font-style: normal;
+  
     
   
 }

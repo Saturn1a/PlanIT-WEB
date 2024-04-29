@@ -1,15 +1,37 @@
 document.addEventListener("DOMContentLoaded", function() {
-    fetchUserProfile();
+    fetchUserProfile(true); // Fetch user profile data and display error message if needed
     bindFormEvent();
+    
+    // Add event listener for delete button to show the modal
+    document.getElementById('delete-button').addEventListener('click', function() {
+        // Show the custom modal
+        document.getElementById('custom-modal').style.display = 'block';
+    });
+    
+    // Add event listener to confirm deletion
+    document.getElementById('confirm-delete').addEventListener('click', function() {
+        // Call deleteUser() function or perform deletion action
+        deleteUser();
+        // Hide the modal after confirmation
+        document.getElementById('custom-modal').style.display = 'none';
+    });
+
+    // Add event listener to cancel deletion
+    document.getElementById('cancel-delete').addEventListener('click', function() {
+        // Hide the modal if the user cancels
+        document.getElementById('custom-modal').style.display = 'none';
+    });
 });
 
-function fetchUserProfile() {
+function fetchUserProfile(displayError) {
     const token = localStorage.getItem('authToken');
     console.log("Retrieved token:", token);  // Log to verify the token
 
     if (!token) {
         console.error("No token available.");
-        displayError("Please log in to view your profile.");
+        if (displayError) {
+            displayError("Please log in to view your profile.");
+        }
         return;
     }
 
@@ -24,7 +46,9 @@ function fetchUserProfile() {
         if (!response.ok) {
             if (response.status === 401) {
                 console.error('Unauthorized access. Session may be invalid or expired.');
-                displayError("Unauthorized access. Please verify if your session is still valid.");
+                if (displayError) {
+                    displayError("Unauthorized access. Please verify if your session is still valid.");
+                }
                 return;
             }
             throw new Error(`Failed to fetch user profile. Status: ${response.status}`);
@@ -39,19 +63,50 @@ function fetchUserProfile() {
     })
     .catch(error => {
         console.error('Error fetching user profile:', error);
-        displayError(error.message);  // Displays the error message based on the caught exception
+        if (displayError) {
+            displayError(error.message);
+        }
     });
 }
 
 function displayUserProfile(user) {
-    document.getElementById('profile-name').textContent = user.name || 'Name not available';
-    document.getElementById('profile-email').textContent = user.email || 'Email not available';
+    document.getElementById('name').value = user.name || ''; // Fill out name field
+    document.getElementById('email').value = user.email || ''; // Fill out email field
 }
 
-function displayError(message) {
-    const errorContainer = document.getElementById('error-message');
-    errorContainer.textContent = message;
-    errorContainer.style.display = 'block';  // Ensures the error message is visible
+function deleteUser() {
+    const token = localStorage.getItem('authToken');
+
+    fetch('https://localhost:7019/api/v1/Users/', {
+        method: 'DELETE',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`
+        }
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Failed to delete user. Status: ' + response.status);
+        }
+        // Remove token from local storage
+        localStorage.removeItem('authToken');
+        displaySuccessMessage('User deleted successfully.');
+        // Redirect to index.html after a short delay
+        setTimeout(() => {
+            window.location.href = 'index.html';
+        }, 3000); // Redirect after 3 seconds (3000 milliseconds)
+        return response.json();
+    })
+    .then(data => {
+        // Handle successful deletion
+        console.log('User deleted successfully');
+        // Optionally, redirect to a different page or perform any other action
+    })
+    .catch(error => {
+        console.error('Error deleting user:', error);
+        displayErrorMessage('Failed to delete user.');
+        // Handle error
+    });
 }
 
 function bindFormEvent() {
@@ -92,14 +147,64 @@ function bindFormEvent() {
             if (!response.ok) {
                 throw new Error('Failed to update user information. Status: ' + response.status);
             }
+            displaySuccessMessage('User information updated successfully.');
+            // Reload the page after successful update
+            setTimeout(() => {
+                location.reload();
+            }, 3000); // Reload after 3 seconds (3000 milliseconds)
             return response.json();
         })
         .then(data => {
-            document.getElementById('update-success-message').textContent = "Updated user information successfully.";
+            // Handle successful update
+            console.log('User information updated successfully');
         })
         .catch(error => {
             console.error('Error:', error);
-            document.getElementById('update-success-message').textContent = error.message;
+            displayErrorMessage('Failed to update user information.');
+            // Handle error
         });
     });
+}
+
+function displayError(message) {
+    const errorContainer = document.getElementById('error-message');
+    errorContainer.textContent = message;
+    errorContainer.style.display = 'block';  // Ensures the error message is visible
+}
+
+function displaySuccessMessage(message, duration = 3000) {
+    const messageDiv = document.createElement('div');
+    messageDiv.textContent = message;
+    messageDiv.style.color = 'green';
+    messageDiv.style.backgroundColor = 'lightgreen';
+    messageDiv.style.padding = '10px';
+    messageDiv.style.marginTop = '10px';
+    messageDiv.style.borderRadius = '5px';
+    messageDiv.style.textAlign = 'center';
+
+    const form = document.getElementById('registration-form');
+    form.parentNode.insertBefore(messageDiv, form.nextSibling); // Insert after the form
+
+    setTimeout(() => {
+        messageDiv.remove(); // Remove the message after the specified duration
+    }, duration);
+}
+
+
+function displayErrorMessage(message, duration = 3000) {
+    const messageDiv = document.createElement('div');
+    messageDiv.textContent = message;
+    messageDiv.style.color = 'red';
+    messageDiv.style.backgroundColor = 'pink';
+    messageDiv.style.padding = '10px';
+    messageDiv.style.marginTop = '10px';
+    messageDiv.style.borderRadius = '5px';
+    messageDiv.style.textAlign = 'center';
+
+    const form = document.getElementById('registration-form');
+    form.parentNode.insertBefore(messageDiv, form.nextSibling); // Insert after the form
+
+    setTimeout(() => {
+        messageDiv.remove(); // Remove the message after the specified duration
+    }, duration);
 }
