@@ -251,22 +251,25 @@ button:hover {
 }
 
 
+#dinner-plans {
+    overflow: hidden; /* Disables both horizontal and vertical scrolling */
+}
 
 #dinner-plans #dinner-items li {
     display: flex;
     align-items: center;
     justify-content: start; /* Aligns items to the start of the list item */
-    margin-bottom: 10px; /* Adds space between each list item */
+    margin-bottom: 0px; /* Adds space between each list item */
 }
 
 #dinner-plans #dinner-items label {
-    margin-right: 10px; /* Adds spacing between label and input */
+    margin-right: 3px; /* Adds spacing between label and input */
     white-space: nowrap; /* Ensures labels do not wrap */
 }
 
 #dinner-plans .dinner-item {
     flex-grow: 1;
-    padding: 5px;
+    padding: 7px;
     margin: 0;
     border-radius: 10px;  /* Adds rounded corners to the input */
     border: 1px solid #ccc; /* Optional: adds a subtle border for better visual separation */
