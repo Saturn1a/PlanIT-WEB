@@ -47,13 +47,17 @@ nav a {
   
   .box {
     flex: 1; /* Makes the boxes share the available space equally */
+    width: 250px;  /* Fixed width for each box */
+    height: 350px; /* Fixed height for each box */
     margin: 10px;  /* Adds some spacing around the boxes */
     padding: 15px;  /* Adds padding inside the boxes */
     border: 1px solid #ccc; /* Adds a border to the boxes */
     border-radius: 5px; /* Rounds the corners of the boxes slightly */
     background-color: rgba(255, 255, 255, 0.8);
+    overflow-y: auto; /* Enables vertical scrolling */
+    overflow-x: hidden; /* Disables horizontal scrolling */
     
-    
+
   }
   
   .box h2 {

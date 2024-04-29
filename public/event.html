@@ -23,7 +23,17 @@
     <div class="boxes-container">
         <div class="box">
           <h2>Events</h2>
-          <ul id="eventList"></ul>
+          <button type="button" class="collapsible">View Events</button>
+          <div class="content">
+            <ul id="eventList"></ul>
+            </div>
+            <div id="eventDetails">
+            <!-- Event details will be dynamically filled here -->
+            <h3 id="detailEventName"></h3>
+            <p id="detailEventLocation"></p>
+            <p id="detailEventDate"></p>
+            <p id="detailEventTime"></p>
+        </div>
           <div class="add-event-button-container">
             <button type="button" id="add-event-button" onclick="window.location.href='CreateEvent.html'">Create Event</button>
             

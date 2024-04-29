@@ -1,76 +1,89 @@
 document.addEventListener('DOMContentLoaded', function() {
-  const eventList = document.getElementById('eventList');
-  eventName.className = 'event-name'; // Assign a class for styling
-  //const inviteList = document.getElementById('inviteList');
+    const eventList = document.getElementById('eventList');
+    const eventDetails = document.getElementById('eventDetails');
+    const collapsible = document.querySelector('.collapsible');
 
- 
+    collapsible.addEventListener('click', function() {
+        this.classList.toggle("active");
+        const content = this.nextElementSibling;
+        if (content.style.display === "block") {
+            content.style.display = "none";
+        } else {
+            content.style.display = "block";
+            fetchEvents();
+        }
+    });
 
-  // Function to fetch events
-  function fetchEvents() {
-      const authToken = localStorage.getItem('authToken');
-      fetch('https://localhost:7019/api/v1/Events?pageNr=1&pageSize=10', {
-          method: 'GET',
-          headers: {
-              'Authorization': 'Bearer ' + authToken
-          },
-          credentials: 'include'
-      })
-      .then(response => {
-          if (!response.ok) {
-              throw new Error('Failed to fetch events: ' + response.statusText);
-          }
-          return response.json();
-      })
-      .then(data => {
-          console.log('Event data:', data);
-          eventList.innerHTML = '';  // Clear the list before appending new items
-          data.forEach(event => {
-              createEventElement(event.id, event.name);
-          });
-      })
-      .catch(error => {
-          console.error('Error fetching events:', error);
-          alert('Failed to load events: ' + error.message);
-      });
-  }
+    // Fetch all events to populate the list
+    function fetchEvents() {
+        const authToken = localStorage.getItem('authToken');
+        fetch('https://localhost:7019/api/v1/Events?pageNr=1&pageSize=10', {
+            method: 'GET',
+            headers: {
+                'Authorization': 'Bearer ' + authToken
+            },
+            credentials: 'include'
+        })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Failed to fetch events');
+            }
+            return response.json();
+        })
+        .then(data => {
+            eventList.innerHTML = ''; // Clear the list before appending new items
+            data.forEach(event => {
+                createEventElement(event.id, event.name);
+            });
+        })
+        .catch(error => {
+            console.error('Error fetching events:', error);
+            alert('Failed to load events: ' + error.message);
+        });
+    }
 
-  // Function to create event element
-  function createEventElement(id, name) {
-      const li = document.createElement('li');
-      li.textContent = name;
+    // Create event list item elements
+    function createEventElement(id, name) {
+        const li = document.createElement('li');
+        li.textContent = name;
+        li.onclick = () => fetchEventDetailsById(id);
+        eventList.appendChild(li);
+    }
 
-      const deleteBtn = document.createElement('button');
-      deleteBtn.textContent = '✖';
-      deleteBtn.className = 'delete-button';
-      deleteBtn.onclick = () => deleteEvent(id, li);
+    // Fetch details for a specific event by ID
+    function fetchEventDetailsById(id) {
+        const authToken = localStorage.getItem('authToken');
+        fetch(`https://localhost:7019/api/v1/Events/${id}`, {
+            method: 'GET',
+            headers: {
+                'Authorization': 'Bearer ' + authToken
+            },
+            credentials: 'include'
+        })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Failed to fetch event details');
+            }
+            return response.json();
+        })
+        .then(event => {
+            displayEventDetails(event);
+        })
+        .catch(error => {
+            console.error('Error fetching event details:', error);
+            alert('Failed to load event details: ' + error.message);
+        });
+    }
 
-      li.appendChild(deleteBtn);
-      eventList.appendChild(li);
+    // Display the fetched event details in the details section
+    function displayEventDetails(event) {
+        document.getElementById('detailEventName').textContent = event.name;
+        document.getElementById('detailEventLocation').textContent = event.location;
+        document.getElementById('detailEventDate').textContent = event.date;
+        document.getElementById('detailEventTime').textContent = event.time;
+        eventDetails.style.display = "block";
+    }
 
-  }
-
-  // Function to delete an event
-  function deleteEvent(id, liElement) {
-      const authToken = localStorage.getItem('authToken');
-      fetch(`https://localhost:7019/api/v1/Events/${id}`, {
-          method: 'DELETE',
-          headers: {
-              'Authorization': 'Bearer ' + authToken
-          },
-          credentials: 'include'
-      })
-      .then(response => {
-          if (!response.ok) {
-              throw new Error('Failed to delete the event');
-          }
-          liElement.remove();
-      })
-      .catch(error => {
-          console.error('Error deleting event:', error);
-          alert('Failed to delete event: ' + error.message);
-      });
-  }
-
-  fetchEvents();
-
+    // Optionally, you can fetch events as soon as the page loads
+    // fetchEvents();
 });

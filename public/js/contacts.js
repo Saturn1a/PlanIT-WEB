@@ -27,6 +27,9 @@ document.addEventListener('DOMContentLoaded', function() {
             console.log('Contact added:', data);
             displaySuccessMessage('Contact added successfully!');
             fetchContacts(); // Refresh the list of contacts
+            // Clear the input fields after successful addition
+            document.getElementById('name').value = '';
+            document.getElementById('email').value = '';
         })
         .catch(error => {
             console.error('Error adding contact:', error);
@@ -54,7 +57,6 @@ document.addEventListener('DOMContentLoaded', function() {
             contactList.innerHTML = '';  // Clear the list before appending new items
             data.forEach(contact => {
                 createContactElement(contact.id, contact.name, contact.email);
-        
             });
         })
         .catch(error => {
