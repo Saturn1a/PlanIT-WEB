@@ -55,27 +55,42 @@ function loadWeeklyDinners(startDate, endDate) {
 
 // Function to create a date string in UTC
 function getDateForAPI(year, month, day) {
-    // This creates a date at midnight UTC
     return new Date(Date.UTC(year, month, day)).toISOString().split('T')[0];
 }
+
 
 // Display Dinners Function: Sets the date for each input element
 function displayDinners(data) {
     const days = ["monday", "tuesday", "wednesday", "thursday", "friday", "saturday", "sunday"];
-    const today = new Date(currentDate);  // Assuming currentDate is the start of the week being viewed
+    const today = new Date(currentDate);
     const currentDayOfWeek = today.getDay();
-    const diffToMonday = currentDayOfWeek === 0 ? -6 : 1 - currentDayOfWeek;  // Adjust if Sunday is day 0
+    const diffToMonday = currentDayOfWeek === 0 ? -6 : 1 - currentDayOfWeek;
 
-    today.setDate(today.getDate() + diffToMonday);  // Set to Monday of the current week
+    today.setDate(today.getDate() + diffToMonday); // Adjust to start of the week
 
     days.forEach((day, index) => {
         const dayDate = new Date(today);
-        dayDate.setDate(today.getDate() + index);  // Move to correct day by adding index
-        const element = document.getElementById(day);
-        if (element) {
-            element.setAttribute('data-date', dayDate.toISOString().split('T')[0]);
-            element.value = data[day] && data[day].name ? data[day].name : "";
-            console.log(day + " date set to: ", element.getAttribute('data-date'));  // Logging for verification
+        dayDate.setDate(today.getDate() + index);
+        const dayElement = document.getElementById(day);
+        if (dayElement) {
+            dayElement.setAttribute('data-date', dayDate.toISOString().split('T')[0]);
+            if (data[day] && data[day].id) {
+                dayElement.value = data[day].name;
+                dayElement.setAttribute('data-dinner-id', data[day].id);
+            } else {
+                dayElement.value = ""; // Clear previous value if no dinner data
+                dayElement.removeAttribute('data-dinner-id');
+            }
+
+            // Ensure each input has a delete button, add if not exists
+            if (!dayElement.parentNode.querySelector('button')) {
+                const deleteBtn = document.createElement('button');
+                deleteBtn.textContent = 'X';
+                deleteBtn.addEventListener('click', function() {
+                    deleteDinner(dayElement.getAttribute('data-dinner-id'), day);
+                });
+                dayElement.parentNode.appendChild(deleteBtn);
+            }
         } else {
             console.error("Element not found for day:", day);
         }
@@ -92,10 +107,13 @@ function addInputEventListeners() {
                 const value = input.value.trim();
                 const date = input.getAttribute('data-date');
                 const dinnerId = input.getAttribute('data-dinner-id');
-                if (value) {
+
+                if (value && dinnerId) {
+                    // Update existing dinner
                     updateOrCreateDinner(day, value, dinnerId, date);
-                } else if (dinnerId) {
-                    deleteDinner(dinnerId, day);
+                } else if (value && !dinnerId) {
+                    // Create new dinner
+                    updateOrCreateDinner(day, value, null, date);
                 }
             }
         });
@@ -103,13 +121,29 @@ function addInputEventListeners() {
 }
 
 
+function addDeleteButtonEventListeners() {
+    const dinnerItems = document.getElementById('dinner-items'); 
+    dinnerItems.addEventListener('click', function(event) {
+        if (event.target.tagName === 'BUTTON' && event.target.textContent === 'X') {
+            const input = event.target.closest('li').querySelector('input');
+            const dinnerId = input.getAttribute('data-dinner-id');
+            if (dinnerId) {
+                deleteDinner(dinnerId, input.id);
+            } else {
+                console.log('No dinner ID found or already deleted');
+            }
+        }
+    });
+}
+
 function updateOrCreateDinner(day, dinnerName, dinnerId, date) {
     const authToken = localStorage.getItem('authToken');
-    const url = dinnerId ? `https://localhost:7019/api/v1/Dinners/${dinnerId}` : 'https://localhost:7019/api/v1/Dinners/register';
-    const method = dinnerId ? 'PUT' : 'POST';
+    // Decide the correct endpoint and method based on the presence of dinnerId
+    const isUpdating = dinnerId && dinnerId.trim() !== "";
+    const url = isUpdating ? `https://localhost:7019/api/v1/Dinners/${dinnerId}` : 'https://localhost:7019/api/v1/Dinners/register';
+    const method = isUpdating ? 'PUT' : 'POST';
 
-    // Ensure the date is in UTC to prevent timezone issues
-    const dateObj = new Date(date + 'T00:00:00Z');
+    console.log(`URL: ${url} Method: ${method}`);
 
     fetch(url, {
         method: method,
@@ -118,16 +152,18 @@ function updateOrCreateDinner(day, dinnerName, dinnerId, date) {
             'Content-Type': 'application/json'
         },
         body: JSON.stringify({
-            date: dateObj.toISOString().split('T')[0], // Format the date as YYYY-MM-DD in UTC
+            date: date,
             name: dinnerName
         })
     }).then(response => {
         if (!response.ok) throw new Error(`Failed to save dinner: ${response.statusText}`);
         return response.json();
     }).then(data => {
-        console.log(`${day} dinner saved successfully.`);
+        console.log(`${day} dinner saved or updated successfully.`);
         const input = document.getElementById(day);
-        input.setAttribute('data-dinner-id', data.id);  // Update the input with the new dinner ID
+        if (!isUpdating) { // Only update the dinner ID if it was a new creation
+            input.setAttribute('data-dinner-id', data.id);
+        }
     }).catch(error => {
         console.error('Error saving dinner:', error);
         document.getElementById('feedback').textContent = `Failed to save ${day} dinner: ` + error.message;
@@ -135,22 +171,20 @@ function updateOrCreateDinner(day, dinnerName, dinnerId, date) {
 }
 
 
-
 function deleteDinner(dinnerId, day) {
     const authToken = localStorage.getItem('authToken');
-    if (confirm(`Are you sure you want to delete the dinner for ${day}?`)) {
-        fetch(`https://localhost:7019/api/v1/Dinners/${dinnerId}`, {
-            method: 'DELETE',
-            headers: { 'Authorization': `Bearer ${authToken}` }
-        }).then(response => {
-            if (!response.ok) throw new Error('Failed to delete dinner.');
-            console.log(`${day} dinner deleted successfully.`);
-            const input = document.getElementById(day);
-            input.value = "";
-            input.removeAttribute('data-dinner-id');
-        }).catch(error => {
-            console.error('Error deleting dinner:', error);
-            document.getElementById('feedback').textContent = `Failed to delete ${day} dinner: ` + error.message;
-        });
-    }
+    fetch(`https://localhost:7019/api/v1/Dinners/${dinnerId}`, {
+        method: 'DELETE',
+        headers: {
+            'Authorization': `Bearer ${authToken}`
+        }
+    }).then(response => {
+        if (!response.ok) throw new Error('Failed to delete dinner.');
+        console.log(`${day} dinner deleted successfully.`);
+        document.getElementById(day).value = ""; 
+        document.getElementById(day).removeAttribute('data-dinner-id'); 
+    }).catch(error => {
+        console.error('Error deleting dinner:', error);
+        document.getElementById('feedback').textContent = `Failed to delete ${day} dinner: ` + error.message;
+    });
 }
