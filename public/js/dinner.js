@@ -1,142 +1,156 @@
-let currentDate; // This will track the current date for the displayed week.
+let currentDate;
 
+// Set current date on page load and attach event listeners
 document.addEventListener("DOMContentLoaded", function() {
     currentDate = new Date();
-    updateWeekDisplay(currentDate); // Initialize display with current week
-
-    document.getElementById('prevWeek').addEventListener('click', function() {
-        console.log("Previous week clicked");
-        let newDate = new Date(currentDate);
-        newDate.setDate(newDate.getDate() - 7);
-        currentDate = newDate;
-        updateWeekDisplay(currentDate);
-    });
-    
-    document.getElementById('nextWeek').addEventListener('click', function() {
-        console.log("Next week clicked");
-        let newDate = new Date(currentDate);
-        newDate.setDate(newDate.getDate() + 7);
-        currentDate = newDate;
-        updateWeekDisplay(currentDate);
-    });
-
-    addInputEventListeners(); // Set up event listeners for dinner item interactions
+    currentDate.setHours(12, 0, 0, 0);  // Set time to noon to avoid day rollover issues
+    updateWeekDisplay(currentDate);
+    addInputEventListeners();
+    document.getElementById('prevWeek').addEventListener('click', handlePrevWeek);
+    document.getElementById('nextWeek').addEventListener('click', handleNextWeek);
 });
+
+// Navigate to the previous week
+function handlePrevWeek() {
+    currentDate.setDate(currentDate.getDate() - 7);
+    updateWeekDisplay(currentDate);
+}
+
+// Navigate to the next week
+function handleNextWeek() {
+    currentDate.setDate(currentDate.getDate() + 7);
+    updateWeekDisplay(currentDate);
+}
 
 // Update the display based on the current date
 function updateWeekDisplay(date) {
-    console.log("Updating display for date:", date);
     const { startDate, endDate } = getCurrentWeekDateRange(date);
     console.log("Start Date:", startDate, "End Date:", endDate);
     const weekNumber = getWeekNumber(new Date(startDate));
-    console.log("Week Number:", weekNumber);
     document.getElementById('weekLabel').textContent = `Week ${weekNumber}`;
     loadWeeklyDinners(startDate, endDate);
 }
 
-// Load weekly dinners from the server
+function showLoadingIndicator(show) {
+    const loader = document.getElementById('loadingIndicator');
+    loader.style.visibility = show ? 'visible' : 'hidden';
+}
+
 function loadWeeklyDinners(startDate, endDate) {
+    showLoadingIndicator(true);
     const authToken = localStorage.getItem('authToken');
     fetch(`https://localhost:7019/api/v1/Dinners/weekly/${startDate}/${endDate}`, {
         method: 'GET',
         headers: {'Authorization': 'Bearer ' + authToken}
     }).then(response => {
+        showLoadingIndicator(false);
         if (response.ok) return response.json();
         throw new Error('Failed to load dinners.');
-    })
-    .then(data => displayDinners(data))
+    }).then(data => displayDinners(data))
     .catch(error => {
         console.error('Error loading dinners:', error);
         document.getElementById('feedback').textContent = 'Failed to load weekly dinners: ' + error.message;
     });
 }
 
-// Display dinners on the page
+// Function to create a date string in UTC
+function getDateForAPI(year, month, day) {
+    // This creates a date at midnight UTC
+    return new Date(Date.UTC(year, month, day)).toISOString().split('T')[0];
+}
+
+// Display Dinners Function: Sets the date for each input element
 function displayDinners(data) {
     const days = ["monday", "tuesday", "wednesday", "thursday", "friday", "saturday", "sunday"];
-    days.forEach(day => {
+    const today = new Date(currentDate);  // Assuming currentDate is the start of the week being viewed
+    const currentDayOfWeek = today.getDay();
+    const diffToMonday = currentDayOfWeek === 0 ? -6 : 1 - currentDayOfWeek;  // Adjust if Sunday is day 0
+
+    today.setDate(today.getDate() + diffToMonday);  // Set to Monday of the current week
+
+    days.forEach((day, index) => {
+        const dayDate = new Date(today);
+        dayDate.setDate(today.getDate() + index);  // Move to correct day by adding index
         const element = document.getElementById(day);
         if (element) {
+            element.setAttribute('data-date', dayDate.toISOString().split('T')[0]);
             element.value = data[day] && data[day].name ? data[day].name : "";
+            console.log(day + " date set to: ", element.getAttribute('data-date'));  // Logging for verification
         } else {
             console.error("Element not found for day:", day);
         }
     });
 }
 
-// Set up input event listeners for dinner items
+
 function addInputEventListeners() {
-    const inputFields = document.querySelectorAll('.dinner-item');
-    inputFields.forEach(input => {
-        input.addEventListener('keypress', function(event) {
+    const days = ["monday", "tuesday", "wednesday", "thursday", "friday", "saturday", "sunday"];
+    days.forEach(day => {
+        const input = document.getElementById(day);
+        input.addEventListener('keyup', (event) => {
             if (event.key === 'Enter') {
-                event.preventDefault();
-                submitDinners();
-            }
-        });
-
-        input.addEventListener('input', function() {
-            const day = input.id.charAt(0).toUpperCase() + input.id.slice(1);
-            if (input.value.trim() === '') {
-                deleteDinner(day); // Delete if the field is emptied
-            } else {
-                updateDinner(day, input.value); // Update as user types
+                const value = input.value.trim();
+                const date = input.getAttribute('data-date');
+                const dinnerId = input.getAttribute('data-dinner-id');
+                if (value) {
+                    updateOrCreateDinner(day, value, dinnerId, date);
+                } else if (dinnerId) {
+                    deleteDinner(dinnerId, day);
+                }
             }
         });
     });
 }
 
-// Submit dinners to the server
-function submitDinners() {
-    const dinners = {};
-    document.querySelectorAll('.dinner-item').forEach(input => {
-        dinners[input.id.charAt(0).toUpperCase() + input.id.slice(1)] = input.value;
-    });
-    const authToken = localStorage.getItem('authToken');
-    fetch('https://localhost:7019/api/v1/Dinners/register-weekly-plan', {
-        method: 'POST',
-        headers: {'Content-Type': 'application/json', 'Authorization': 'Bearer ' + authToken},
-        body: JSON.stringify({weeklyPlanDTO: dinners})
-    }).then(response => {
-        if (response.ok) return response.json();
-        throw new Error('Failed to submit dinners.');
-    })
-    .then(data => {
-        console.log('Success:', data);
-        updateWeekDisplay(currentDate); // Refresh display to show updated data
-    })
-    .catch(error => {
-        console.error('Error submitting dinners:', error);
-        document.getElementById('feedback').textContent = 'Failed to submit weekly dinners: ' + error.message;
-    });
-}
 
-// Update a specific dinner
-function updateDinner(day, dinnerName) {
+function updateOrCreateDinner(day, dinnerName, dinnerId, date) {
     const authToken = localStorage.getItem('authToken');
-    fetch(`https://localhost:7019/api/v1/Dinners/update/${day}`, {
-        method: 'PUT',
-        headers: {'Content-Type': 'application/json', 'Authorization': 'Bearer ' + authToken},
-        body: JSON.stringify({Name: dinnerName})
-    }).then(response => {
-        if (!response.ok) throw new Error('Failed to update dinner.');
-    }).catch(error => {
-        console.error('Error updating dinner:', error);
-        document.getElementById('feedback').textContent = 'Failed to update dinner for ' + day + ': ' + error.message;
-    });
-}
+    const url = dinnerId ? `https://localhost:7019/api/v1/Dinners/${dinnerId}` : 'https://localhost:7019/api/v1/Dinners/register';
+    const method = dinnerId ? 'PUT' : 'POST';
 
-// Delete a specific dinner
-function deleteDinner(day) {
-    const authToken = localStorage.getItem('authToken');
-    fetch(`https://localhost:7019/api/v1/Dinners/delete/${day}`, {
-        method: 'DELETE',
+    // Ensure the date is in UTC to prevent timezone issues
+    const dateObj = new Date(date + 'T00:00:00Z');
+
+    fetch(url, {
+        method: method,
         headers: {
-            'Authorization': 'Bearer ' + authToken,
-            'Accept': 'application/json', 
+            'Authorization': `Bearer ${authToken}`,
             'Content-Type': 'application/json'
-        }
+        },
+        body: JSON.stringify({
+            date: dateObj.toISOString().split('T')[0], // Format the date as YYYY-MM-DD in UTC
+            name: dinnerName
+        })
     }).then(response => {
-        if (!response.ok) throw new Error('Failed to delete dinner.');
-    }).catch(error => console.error('Error deleting dinner:', error));
+        if (!response.ok) throw new Error(`Failed to save dinner: ${response.statusText}`);
+        return response.json();
+    }).then(data => {
+        console.log(`${day} dinner saved successfully.`);
+        const input = document.getElementById(day);
+        input.setAttribute('data-dinner-id', data.id);  // Update the input with the new dinner ID
+    }).catch(error => {
+        console.error('Error saving dinner:', error);
+        document.getElementById('feedback').textContent = `Failed to save ${day} dinner: ` + error.message;
+    });
+}
+
+
+
+function deleteDinner(dinnerId, day) {
+    const authToken = localStorage.getItem('authToken');
+    if (confirm(`Are you sure you want to delete the dinner for ${day}?`)) {
+        fetch(`https://localhost:7019/api/v1/Dinners/${dinnerId}`, {
+            method: 'DELETE',
+            headers: { 'Authorization': `Bearer ${authToken}` }
+        }).then(response => {
+            if (!response.ok) throw new Error('Failed to delete dinner.');
+            console.log(`${day} dinner deleted successfully.`);
+            const input = document.getElementById(day);
+            input.value = "";
+            input.removeAttribute('data-dinner-id');
+        }).catch(error => {
+            console.error('Error deleting dinner:', error);
+            document.getElementById('feedback').textContent = `Failed to delete ${day} dinner: ` + error.message;
+        });
+    }
 }
