@@ -1,44 +1,72 @@
 let currentMonth = new Date().getMonth();
 let currentYear = new Date().getFullYear();
+let monthSelect; 
+let yearSelect;
+const months = ["January", "February", "March", "April", "May", "June",
+                "July", "August", "September", "October", "November", "December"];
 
 document.addEventListener('DOMContentLoaded', function() {
-    document.getElementById('prev-month').addEventListener('click', function() {
-        navigateMonth(-1);
+    monthSelect = document.getElementById('month-select');
+    yearSelect = document.getElementById('year-select');
+
+    // Populate month dropdown
+    months.forEach((month, index) => {
+        const option = new Option(month, index);
+        monthSelect.add(option);
     });
-    document.getElementById('next-month').addEventListener('click', function() {
-        navigateMonth(1);
+
+    // Populate year dropdown
+    for (let i = currentYear - 10; i <= currentYear + 10; i++) {
+        const option = new Option(i, i);
+        yearSelect.add(option);
+    };
+
+    // Set initial values
+    monthSelect.value = currentMonth;
+    yearSelect.value = currentYear;
+
+    monthSelect.addEventListener('change', function() {
+        currentMonth = parseInt(this.value);
+        renderCalendar(currentMonth, currentYear);
     });
-    renderCalendar(currentMonth, currentYear); // Call renderCalendar here with initial values
+
+    yearSelect.addEventListener('change', function() {
+        currentYear = parseInt(this.value);
+        renderCalendar(currentMonth, currentYear);
+    });
+
+    document.getElementById('prev-month').addEventListener('click', () => navigateMonth(-1));
+    document.getElementById('next-month').addEventListener('click', () => navigateMonth(1));
+
+    renderCalendar(currentMonth, currentYear); // Initial calendar rendering
 });
 
 function navigateMonth(delta) {
     currentMonth += delta;
     if (currentMonth < 0) {
         currentMonth = 11;
-        currentYear -= 1;
+        currentYear--;
     } else if (currentMonth > 11) {
         currentMonth = 0;
-        currentYear += 1;
+        currentYear++;
     }
+    monthSelect.value = currentMonth;
+    yearSelect.value = currentYear;
     renderCalendar(currentMonth, currentYear);
 }
 
 function renderCalendar(month, year) {
-    updateCalendarTitle(month, year); // Update the calendar title with the new month and year
-    
     const daysContainer = document.querySelector('.days');
-    daysContainer.innerHTML = ''; // Clear previous calendar days
-    
+    daysContainer.innerHTML = '';
+
     let firstDay = new Date(year, month, 1).getDay();
-    firstDay = firstDay === 0 ? 6 : firstDay - 1; // Adjust for Monday start
-    
-    const daysInMonth = new Date(year, month + 1, 0).getDate(); // Corrected to month + 1
+    firstDay = firstDay === 0 ? 6 : firstDay - 1; // Adjust for Monday start if your week starts on Monday
+
+    let daysInMonth = new Date(year, month + 1, 0).getDate();
 
     // Create empty slots at the beginning
     for (let i = 0; i < firstDay; i++) {
-        const emptyDay = document.createElement('li');
-        emptyDay.className = 'empty-day';
-        daysContainer.appendChild(emptyDay);
+        daysContainer.appendChild(document.createElement('li')).className = 'empty-day';
     }
 
     // Fill in the actual days
@@ -53,15 +81,6 @@ function renderCalendar(month, year) {
     const totalSlots = firstDay + daysInMonth;
     const emptySlotsAtEnd = totalSlots % 7 ? 7 - (totalSlots % 7) : 0;
     for (let i = 0; i < emptySlotsAtEnd; i++) {
-        const emptyDay = document.createElement('li');
-        emptyDay.className = 'empty-day';
-        daysContainer.appendChild(emptyDay);
+        daysContainer.appendChild(document.createElement('li')).className = 'empty-day';
     }
-}
-
-function updateCalendarTitle(month, year) {
-    const calendarTitle = document.querySelector('#calendar-container h3');
-    const monthNames = ["January", "February", "March", "April", "May", "June",
-                        "July", "August", "September", "October", "November", "December"];
-    calendarTitle.textContent = `${monthNames[month]} ${year}`;
 }
