@@ -71,7 +71,7 @@ main {
 #calendar-container {
     flex: 1; /* Allows the calendar to grow but with a maximum width */
     max-width: 50%; /* Limits the calendar to half of the main container */
-    height: 650px; /* Fixed height */
+    height: 670px; /* Fixed height */
     padding: 20px;
     margin-right: 20px; /* Adds some space between the calendar and the lists */
     background-color: rgba(255, 255, 255, 0.8);
@@ -101,13 +101,14 @@ main {
     background-color: #bb74ea;
     color: white;
     border: none;
-    border-radius: 5px;
+    border-radius: 10px;
     text-align: center;
     font-size: 25px; /* Adjust the value as needed */
     padding-top: 0px;
     padding-bottom: 0px;
     padding-left: 3px; /* Maintain left padding */
     padding-right: 3px; /* Maintain right padding */
+    min-width: 50px; /* Ensure buttons have a fixed width */
     
 }
 
@@ -138,10 +139,16 @@ main {
     justify-content: center; /* Horizontally centers the content */
 }
 
-/* CHANGE THE COLOR OF THE EMPTY DAYS
-.empty-day {
-    background-color: #f0f0f0;  
-} */
+#month-select, #year-select {
+    font-family: "Press Start 2P", system-ui;
+    font-size: 16px;
+    color: #bb74ea;
+    cursor: pointer;
+    border: 1px solid #a06cd5; /* Styling borders */
+    border-radius: 10px; /* Rounded corners for aesthetics */
+    padding: 10px 20px; /* Padding for better touch area */
+    background-color: rgba(255, 255, 255, 0.5); /* Background color */
+}
 
 
 #side-content {
@@ -150,7 +157,7 @@ main {
     justify-content: space-between; /* Ensures space between columns */
     align-items: stretch; /* This will make all the child boxes stretch to fill the container equally */
     max-width: 50%;
-    height: 650px; /* Same as the calendar */
+    height: 670px; /* Same as the calendar */
     margin-left: 10px;
 }
 
@@ -158,7 +165,7 @@ main {
     flex: 0 0 calc(50% - 10px); /* Width calculation */
     padding: 10px;
     margin-bottom: 10px; /* Space between the rows of boxes */
-    height: 340px; /* Fixed height calculated */
+    height: 350px; /* Fixed height calculated */
     overflow-y: auto; /* Vertical scrolling enabled */
     overflow-x: hidden; /* Prevent horizontal scrolling */
     background-color: rgba(255, 255, 255, 0.8);
@@ -224,11 +231,7 @@ button {
     padding: 10px 20px;
     cursor: pointer;
 }
-/*
-button:hover {
-    background-color: #0056b3;
-}
-*/
+
 
 #todo-list input[type="text"] {
     width: 100%;
@@ -287,7 +290,7 @@ button:hover {
     background-color: #bb74ea;
     color: white;
     border: none;
-    border-radius: 5px;
+    border-radius: 10px;
     font-size: 18px; /* Smaller font size for better fit */
     padding: 1px 8px; /* Adjust padding for better visual */
 }
@@ -302,36 +305,83 @@ button:hover {
     font-size: 14px; /* Larger font size for emphasis */
 }
 
+.input-group {
+    display: flex;
+    align-items: center; /* Align vertically */
+    justify-content: flex-start; /* Align horizontally to the start */
+    gap: 5px; /* Space between elements */
+}
 
 #important-dates input[type="text"],
 #important-dates input[type="date"] {
-    width: calc(50% - 10px);
+    flex-grow: 1; /* Allows inputs to grow and fill available space */
+    flex-basis: 0%;
     padding: 8px;
-    margin: 5px;
+    margin: 2; /* Adjust margin as needed */
     border: 1px solid #ccc;
-    border-radius: 5px;
+    border-radius: 10px;
 }
 
-#important-dates button {
-    padding: 8px 10px;
-    background-color: #4CAF50;
+
+#add-date {
+    font-family: "Press Start 2P", system-ui;
+    font-size: 11px; 
+    padding: 8px;
+    background-color: #bb74ea;
     color: white;
     border: none;
-    border-radius: 5px;
+    border-radius: 10px;
     cursor: pointer;
+    flex-shrink: 0; /* Prevents the button from shrinking */
 }
 
-#important-dates button:hover {
-    background-color: #45a049;
+
+#add-date:hover {
+    background-color: #a06cd5;
 }
 
 #dates-items li {
     list-style: none;
-    margin: 5px 0;
+    margin: 1px 0;
+    font-size: 12px; /* Smaller font size for better fit */
     padding: 10px;
     background-color: #f9f9f9;
     border: 1px solid #ddd;
-    border-radius: 5px;
+    border-radius: 10px;
+}
+
+#dates-items .date-item {
+    display: flex;
+    justify-content: space-between; /* Aligns children (contentDiv and deleteBtn) on opposite ends */
+    align-items: center; /* Centers children vertically */
+    padding: 10px;
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    margin-bottom: 5px; /* Space between items */
+}
+
+.content-div {
+    display: flex;
+    flex-direction: column; /* Stack date and name vertically */
+}
+
+.date-text, .name-text {
+    margin-bottom: 5px; 
+}
+
+#dates-items .delete-button {
+    margin-left: 10px; /* Ensure some space between the content and the button */
+    background-color: transparent;
+    color: red;
+    border: none;
+    cursor: pointer;
+    padding: 10px 20px;
+    font-size: 1.2em;
+}
+
+#dates-items .date-item.today-highlight {
+    background-color: rgba(194, 188, 252, 0.5); /* 50% transparency */
 }
 
 
