@@ -2,6 +2,8 @@ document.addEventListener('DOMContentLoaded', function() {
     const datesList = document.getElementById('dates-items');
     const dateNameInput = document.getElementById('date-name');
     const dateDateInput = document.getElementById('date-date');
+    const today = new Date().toISOString().slice(0, 10);
+    dateDateInput.min = today;
     const addButton = document.getElementById('add-date');
 
     // Ensure all elements are present
@@ -22,7 +24,14 @@ document.addEventListener('DOMContentLoaded', function() {
             dateNameInput.value = '';
             dateDateInput.value = '';
         } else {
-            alert('Please enter both name and date.');
+            Swal.fire({  // SweetAlert
+                icon: 'info',
+                title: 'Oops...',
+                text: 'Please enter both name and date.',
+                background: '#fffbe7',
+                confirmButtonColor: '#bb74ea',
+                confirmButtonText: 'OK'
+            });
         }
     });
 
@@ -39,7 +48,7 @@ document.addEventListener('DOMContentLoaded', function() {
         .then(response => response.json())
         .then(data => {
             // Sort dates ascending
-            datesList.innerHTML = '';  // Clear existing entries
+            datesList.innerHTML = ''; 
             data.sort((a, b) => new Date(a.date) - new Date(b.date));
             data.forEach(date => {
                 createDateElement(date);
@@ -66,42 +75,15 @@ document.addEventListener('DOMContentLoaded', function() {
         .then(response => response.json())
         .then(data => {
             if (data) {
-                fetchImportantDates();  // Re-fetch and redraw the list
+                fetchImportantDates(); 
             }
-            // createDateElement(data);
+            
         })
         .catch(error => {
             console.error('Error adding important date:', error);
             alert('Failed to add important date: ' + error.message);
         });
     }
-
-   // dateUtils.js
-
-    function formatDate(dateString) {
-        const date = new Date(dateString);
-        const month = date.toLocaleString('en-US', { month: 'long' }); // Gets the full month name
-        const year = date.getFullYear();
-        const day = date.getDate();
-
-        // Construct the date with the format "Month DaySuffix Year"
-        return `${month} ${getDaySuffix(day)} ${year}`;
-    }
-
-    function getDaySuffix(day) {
-        let suffix;
-        if (day > 3 && day < 21) suffix = 'th';
-        else {
-            switch (day % 10) {
-                case 1:  suffix = "st"; break;
-                case 2:  suffix = "nd"; break;
-                case 3:  suffix = "rd"; break;
-                default: suffix = "th";
-            }
-        }
-        return `${day}${suffix}`;
-    }
-
 
 
     function createDateElement(date) {

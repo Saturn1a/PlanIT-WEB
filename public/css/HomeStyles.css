@@ -385,6 +385,11 @@ button {
 }
 
 
+.swal2-icon.swal2-info {
+    border-color: #a06cd5; /* Changes the border color for info */
+    color: #bb74ea; /* Changes the color of the info mark */
+  }
+
 @media (max-width: 768px) {
     #calendar-container, #side-content {
         max-width: 100%;

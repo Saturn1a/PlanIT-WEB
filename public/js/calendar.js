@@ -55,6 +55,7 @@ function navigateMonth(delta) {
     renderCalendar(currentMonth, currentYear);
 }
 
+
 function renderCalendar(month, year) {
     const daysContainer = document.querySelector('.days');
     daysContainer.innerHTML = '';
