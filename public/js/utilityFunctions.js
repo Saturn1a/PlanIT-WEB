@@ -1,4 +1,3 @@
-
 // Calculate the current week's date range based on a provided date
 function getCurrentWeekDateRange(date) {
     let dayOfWeek = date.getDay();
@@ -22,7 +21,6 @@ function getWeekNumber(date) {
 
 function formatDate(dateString) {
     const date = new Date(dateString);
-    // const options = { month: 'long', day: 'numeric', year: 'numeric' };
     const month = date.toLocaleString('en-US', { month: 'long' }); // Gets the full month name
     const year = date.getFullYear();
     const day = date.getDate();
@@ -31,29 +29,16 @@ function formatDate(dateString) {
     return `${month} ${getDaySuffix(day)} ${year}`;
 }
 
-
 function getDaySuffix(day) {
-    let suffix = day > 3 && day < 21 ? 'th' : 
-                 day % 10 === 1 ? "st" : 
-                 day % 10 === 2 ? "nd" : 
-                 day % 10 === 3 ? "rd" : "th";
-    console.log(`Suffix for day ${day}: ${suffix}`);
-    return day + suffix;
-}
-
-
-function insertDateInOrder(newLi, newDate) {
-    const items = datesList.children;
-    let inserted = false;
-    for (let i = 0; i < items.length; i++) {
-        const existingDate = items[i].getElementsByClassName('date-text')[0].textContent.replace('DATE: ', '');
-        if (new Date(newDate) < new Date(formatDate(existingDate))) {
-            datesList.insertBefore(newLi, items[i]);
-            inserted = true;
-            break;
+    let suffix;
+    if (day > 3 && day < 21) suffix = 'th';
+    else {
+        switch (day % 10) {
+            case 1:  suffix = "st"; break;
+            case 2:  suffix = "nd"; break;
+            case 3:  suffix = "rd"; break;
+            default: suffix = "th";
         }
     }
-    if (!inserted) { // If it's the latest date or the first item
-        datesList.appendChild(newLi);
-    }
+    return `${day}${suffix}`;
 }

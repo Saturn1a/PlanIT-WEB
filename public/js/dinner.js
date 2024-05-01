@@ -49,7 +49,6 @@ function loadWeeklyDinners(startDate, endDate) {
     }).then(data => displayDinners(data))
     .catch(error => {
         console.error('Error loading dinners:', error);
-        document.getElementById('feedback').textContent = 'Failed to load weekly dinners: ' + error.message;
     });
 }
 
@@ -102,19 +101,19 @@ function addInputEventListeners() {
     const days = ["monday", "tuesday", "wednesday", "thursday", "friday", "saturday", "sunday"];
     days.forEach(day => {
         const input = document.getElementById(day);
-        input.addEventListener('keyup', (event) => {
-            if (event.key === 'Enter') {
-                const value = input.value.trim();
-                const date = input.getAttribute('data-date');
-                const dinnerId = input.getAttribute('data-dinner-id');
+        
+        // Reacting when user changes the input or moves out of the input field
+        input.addEventListener('change', () => {
+            const value = input.value.trim();
+            const date = input.getAttribute('data-date');
+            const dinnerId = input.getAttribute('data-dinner-id');
 
-                if (value && dinnerId) {
-                    // Update existing dinner
-                    updateOrCreateDinner(day, value, dinnerId, date);
-                } else if (value && !dinnerId) {
-                    // Create new dinner
-                    updateOrCreateDinner(day, value, null, date);
-                }
+            if (value && dinnerId) {
+                // Update existing dinner
+                updateOrCreateDinner(day, value, dinnerId, date);
+            } else if (value && !dinnerId) {
+                // Create new dinner
+                updateOrCreateDinner(day, value, null, date);
             }
         });
     });
@@ -166,7 +165,6 @@ function updateOrCreateDinner(day, dinnerName, dinnerId, date) {
         }
     }).catch(error => {
         console.error('Error saving dinner:', error);
-        document.getElementById('feedback').textContent = `Failed to save ${day} dinner: ` + error.message;
     });
 }
 
@@ -185,6 +183,6 @@ function deleteDinner(dinnerId, day) {
         document.getElementById(day).removeAttribute('data-dinner-id'); 
     }).catch(error => {
         console.error('Error deleting dinner:', error);
-        document.getElementById('feedback').textContent = `Failed to delete ${day} dinner: ` + error.message;
-    });
+    });   
+
 }
