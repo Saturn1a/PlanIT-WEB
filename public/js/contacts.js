@@ -65,18 +65,35 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
+
     function createContactElement(id, name, email) {
         const li = document.createElement('li');
-        li.textContent = `${name} (${email})`;
-
+        li.className = 'contact-item';
+    
+        const contentDiv = document.createElement('div');
+        contentDiv.className = 'content-div';
+    
+        const nameDiv = document.createElement('div');
+        nameDiv.textContent = name;
+        nameDiv.className = 'name-text';
+    
+        const emailDiv = document.createElement('div');
+        emailDiv.textContent = email;
+        emailDiv.className = 'email-text';
+    
+        contentDiv.appendChild(nameDiv);
+        contentDiv.appendChild(emailDiv);
+    
         const deleteBtn = document.createElement('button');
         deleteBtn.textContent = '✖';
         deleteBtn.className = 'delete-button';
         deleteBtn.onclick = () => deleteContact(id, li);
-
+    
+        li.appendChild(contentDiv);
         li.appendChild(deleteBtn);
         document.getElementById('contact-list').appendChild(li);
     }
+    
 
     function deleteContact(id, liElement) {
         const authToken = localStorage.getItem('authToken');

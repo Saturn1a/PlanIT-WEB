@@ -39,23 +39,35 @@ nav a {
 .boxes-container {
   display: flex;
   justify-content: center;
-  max-width: 800px;
+  max-width: 1000px;
+  min-width: 300px;
   margin: 0 auto;
   margin-top: 100px;
   gap: 20px;
 }
 
-.box {
-  flex: 1;
-  margin: 10px;
+
+.box { 
   padding: 15px;
   border: 1px solid #ccc;
-  border-radius: 5px;
+  border-radius: 10px;
   background-color: rgba(255, 255, 255, 0.8);
   max-height: 400px; /* Set a max-height for the boxes */
   overflow-y: auto; /* Enables vertical scrolling */
   overflow-x: hidden;
 }
+
+/* Specific widths for each box */
+.box-form {
+  flex: 0 0 300px; /* Adjusted for form inputs and buttons */
+  margin: 10px;
+}
+
+.box-contacts {
+  flex-wrap: 1; /* Larger space for listing contacts */
+  margin: 10px;
+}
+
 
 .box h2 {
   margin-bottom: 10px;
@@ -76,7 +88,7 @@ input[type="text"], input[type="email"] {
   display: inline-block;
   border: 1px solid #ccc;
   box-sizing: border-box;
-  border-radius: 4px;
+  border-radius: 10px;
 }
 
 button {
@@ -90,8 +102,9 @@ button {
   border: none;
   cursor: pointer;
   width: 100%;
-  border-radius: 4px;
+  border-radius: 10px;
 }
+
 
 .delete-button {
   background-color: transparent;
@@ -99,6 +112,8 @@ button {
   border: none;
   padding: 10px 20px;
   cursor: pointer;
+  padding: 10px 20px;
+  font-size: 1em;
 }
 
 button:hover {
@@ -111,3 +126,22 @@ button:hover {
   margin: 0; /* Adjusts margin as needed, depending on your layout */
 }
 
+#contact-list .contact-item {
+  display: flex;
+  justify-content: space-between; /* Aligns children (contentDiv and deleteBtn) on opposite ends */
+  align-items: center; /* Centers children vertically */
+  padding: 10px;
+  background-color: #f9f9f9;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  margin-bottom: 5px; /* Space between items */
+}
+
+.content-div {
+  display: flex;
+  flex-direction: column; /* Stack name and email vertically */
+}
+
+.name-text, .email-text {
+  margin-bottom: 5px; 
+}
