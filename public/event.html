@@ -8,6 +8,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
 </head>
+<body>
 <header>
     <nav>
         <a href="home.html">HOME</a>
@@ -17,37 +18,35 @@
         <!-- Additional navigation links -->
     </nav>
 </header>
-<body>
 
-
-    <div class="boxes-container">
-        <div class="box">
-          <h2>Events</h2>
-          <button type="button" class="collapsible">View Events</button>
-          <div class="content">
-            <ul id="eventList"></ul>
+<div class="boxes-container">
+    <div class="box">
+        <h2>Events</h2>
+        <div class="collapsible-container">
+            <button type="button" class="collapsible">View Events</button>
+            <div class="content">
+                <ul id="eventList"></ul>
             </div>
-            <div id="eventDetails">
-            <!-- Event details will be dynamically filled here -->
+        </div>
+        <div id="eventDetails">
             <h3 id="detailEventName"></h3>
             <p id="detailEventLocation"></p>
             <p id="detailEventDate"></p>
             <p id="detailEventTime"></p>
         </div>
-          <div class="add-event-button-container">
+        <div class="add-event-button-container">
             <button type="button" id="add-event-button" onclick="window.location.href='CreateEvent.html'">Create Event</button>
-            
-          </div>
         </div>
-        <div class="box">
-          <h2>Invites</h2>
-          <ul id="inviteList"></ul>
-          <div class="add-invite-button-container">
+    </div>
+    <div class="box">
+        <h2>Invites</h2>
+        <ul id="inviteList"></ul>
+        <div class="add-invite-button-container">
             <button id="add-invite-button">Add Invite</button>
         </div>
-      </div>
+    </div>
+</div>
 
-      
-<script src="js/event.js"></script>  
+<script src="js/event.js"></script>
 </body>
 </html>

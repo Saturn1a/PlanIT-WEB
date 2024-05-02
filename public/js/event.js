@@ -1,11 +1,13 @@
 document.addEventListener('DOMContentLoaded', function() {
     const eventList = document.getElementById('eventList');
     const eventDetails = document.getElementById('eventDetails');
+    const inviteList = document.getElementById('inviteList'); // Get the invite list element
     const collapsible = document.querySelector('.collapsible');
+    const content = collapsible.nextElementSibling;
 
-    collapsible.addEventListener('click', function() {
+    collapsible.addEventListener('click', function(event) {
+        event.stopPropagation(); // Prevent the click from bubbling to the document
         this.classList.toggle("active");
-        const content = this.nextElementSibling;
         if (content.style.display === "block") {
             content.style.display = "none";
         } else {
@@ -14,7 +16,14 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 
-    // Fetch all events to populate the list
+    // Close the collapsible when clicking outside
+    document.addEventListener('click', function(event) {
+        if (!collapsible.contains(event.target) && !content.contains(event.target)) {
+            content.style.display = 'none';
+            collapsible.classList.remove("active");
+        }
+    });
+
     function fetchEvents() {
         const authToken = localStorage.getItem('authToken');
         fetch('https://localhost:7019/api/v1/Events?pageNr=1&pageSize=10', {
@@ -42,15 +51,16 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
-    // Create event list item elements
     function createEventElement(id, name) {
         const li = document.createElement('li');
         li.textContent = name;
-        li.onclick = () => fetchEventDetailsById(id);
+        li.onclick = () => {
+            fetchEventDetailsById(id);
+            fetchInvitesByEventId(id); // Fetch and display invites related to the selected event
+        };
         eventList.appendChild(li);
     }
 
-    // Fetch details for a specific event by ID
     function fetchEventDetailsById(id) {
         const authToken = localStorage.getItem('authToken');
         fetch(`https://localhost:7019/api/v1/Events/${id}`, {
@@ -75,7 +85,35 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
-    // Display the fetched event details in the details section
+    function fetchInvitesByEventId(eventId) {
+        const authToken = localStorage.getItem('authToken');
+        fetch(`https://localhost:7019/api/v1/Invites?pageNr=1&pageSize=10`, {
+            method: 'GET',
+            headers: {
+                'Authorization': 'Bearer ' + authToken
+            },
+            credentials: 'include'
+        })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Failed to fetch invites');
+            }
+            return response.json();
+        })
+        .then(invites => {
+            inviteList.innerHTML = ''; // Clear the list before appending new items
+            invites.forEach(invite => {
+                const li = document.createElement('li');
+                li.textContent = `${invite.name} ${invite.email}`;
+                inviteList.appendChild(li);
+            });
+        })
+        .catch(error => {
+            console.error('Error fetching invites:', error);
+            alert('Failed to load invites: ' + error.message);
+        });
+    }
+
     function displayEventDetails(event) {
         document.getElementById('detailEventName').textContent = event.name;
         document.getElementById('detailEventLocation').textContent = event.location;
@@ -83,7 +121,4 @@ document.addEventListener('DOMContentLoaded', function() {
         document.getElementById('detailEventTime').textContent = event.time;
         eventDetails.style.display = "block";
     }
-
-    // Optionally, you can fetch events as soon as the page loads
-    // fetchEvents();
 });
