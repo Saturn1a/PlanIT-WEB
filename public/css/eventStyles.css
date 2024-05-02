@@ -1,95 +1,95 @@
 body, html {
-    height: 100%;
-    margin: 0;
-    font-family: "Press Start 2P", system-ui;
-    font-weight: 400;
-    font-style: normal;
-    background-image: url('../images/space_background_pixel_art.jpeg');
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: cover;
-    background-attachment: fixed;
+  height: 100%;
+  margin: 0;
+  font-family: "Press Start 2P", system-ui;
+  font-weight: 400;
+  font-style: normal;
+  background-image: url('../images/space_background_pixel_art.jpeg');
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-attachment: fixed;
 }
 
-/* General header styling */
 header {
   background-color: rgba(255, 255, 255, 0.8);
   color: #bb74ea;
   padding: 10px 20px;
-  display: flex; /* Enables Flexbox layout */
-  justify-content: space-between; /* Spaces out child elements */
-  align-items: center; /* Vertically centers child elements */
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
   height: 30px;
 }
 
-/* Navigation container styling */
 nav {
-  width: 100%; /* Ensures the nav container fills the entire header */
+  width: 100%;
   display: flex;
   align-items: center;
 }
 
-/* Styling for navigation links */
 nav a {
   color: #bb74ea;
   text-decoration: none;
-  margin-right: 20px; /* Adds space between multiple navigation links */
+  margin-right: 20px;
 }
-
-
 
 .boxes-container {
   display: flex;
-  max-width: 800px; /* Adjust the value for your desired width */
-  margin: 0 auto; /* Centers the container horizontally */
+  max-width: 800px;
+  margin: 0 auto;
   margin-top: 100px;
-  }
-  
-  .box {
-    flex: 1; /* Makes the boxes share the available space equally */
-    width: 250px;  /* Fixed width for each box */
-    height: 350px; /* Fixed height for each box */
-    margin: 10px;  /* Adds some spacing around the boxes */
-    padding: 15px;  /* Adds padding inside the boxes */
-    border: 1px solid #ccc; /* Adds a border to the boxes */
-    border-radius: 5px; /* Rounds the corners of the boxes slightly */
-    background-color: rgba(255, 255, 255, 0.8);
-    overflow-y: auto; /* Enables vertical scrolling */
-    overflow-x: hidden; /* Disables horizontal scrolling */
-    
-
-  }
-  
-  .box h2 {
-    margin-bottom: 10px; /* Adds space below the title */
-  }
-
-  #eventList {
-    list-style-type: none; /* This removes the bullet points */
-    padding: 0; /* This removes any default padding */
 }
 
-  
+.box {
+  flex: 1;
+  width: 250px;
+  height: 350px;
+  margin: 10px;
+  padding: 15px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  background-color: rgba(255, 255, 255, 0.8);
+  overflow-y: auto;
+  overflow-x: hidden;
+}
 
+.collapsible-container {
+  position: relative;
+}
+
+.content {
+  position: absolute;
+  width: 100%; /* Adjust the width as needed */
+  height: 200px; /* Fixed height */
+  top: 30px;
+  left: 0;
+  background-color: rgba(255, 255, 255, 0.9);
+  display: none;
+  z-index: 100;
+  overflow-y: scroll; /* Enable vertical scrolling */
+  overflow-x: hidden;
+  border-radius: 5px; /* Optional, for rounded corners */
+}
+
+button.collapsible.active + .content {
+  display: block;
+}
 
 button {
-    font-family: "Press Start 2P", system-ui;
-    font-weight: 400;
-    font-style: normal;
-    background-color: #bb74ea;
-    color: white;
-    padding: 14px 20px;
-    margin: 8px 0;
-    border: none;
-    cursor: pointer;
-    width: 100%;
-    border-radius: 4px;
+  font-family: "Press Start 2P", system-ui;
+  background-color: #bb74ea;
+  color: white;
+  padding: 14px 20px;
+  margin: 8px 0;
+  border: none;
+  cursor: pointer;
+  width: 100%;
+  border-radius: 4px;
 }
 
 button:hover {
-    opacity: 0.8;
+  opacity: 0.8;
 }
-
 
 .delete-button {
   background-color: transparent;
@@ -97,22 +97,47 @@ button:hover {
   border: none;
   padding: 10px 20px;
   cursor: pointer;
-  white-space: nowrap; /* Ensures the button does not wrap */
+  white-space: nowrap;
 }
 
-#eventList li {
-  display: flex; /* Ensures content is in a row */
-  align-items: center; /* Vertically aligns items in the middle */
-  justify-content: space-between; /* Separates event name and delete button */
-  margin-bottom: 8px; /* Space between list items */
+#eventList li, #inviteList li {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 8px;
 }
 
-.event-name {
-  flex-grow: 1; /* Allows the name to take up as much space as possible */
-  margin-right: 10px; /* Space between the name and the button */
-  overflow: hidden; /* Hides text that goes beyond the allocated space */
-  white-space: nowrap; /* Prevents text from wrapping to a new line */
-  text-overflow: ellipsis; /* Adds an ellipsis if the text is too long */
+.event-name, .invite-name {
+  flex-grow: 1;
+  margin-right: 10px;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
 }
 
+#inviteList {
+  list-style: none;
+  padding-left: 0;  /* Removes default padding */
+}
 
+#inviteList li {
+  margin: 1px 0;
+  font-size: 12px; /* Smaller font size for a compact look */
+  padding: 10px;
+  background-color: #f9f9f9;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  display: flex;
+  justify-content: space-between; /* Aligns children (content and optional buttons) on opposite ends */
+  align-items: center; /* Centers children vertically */
+  margin-bottom: 5px; /* Space between items */
+}
+
+.invite-content {
+  display: flex;
+  flex-direction: column; /* Stack additional details vertically */
+}
+
+.invite-date, .invite-name {
+  margin-bottom: 5px; 
+}
