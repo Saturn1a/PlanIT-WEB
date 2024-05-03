@@ -23,7 +23,6 @@ document.addEventListener('DOMContentLoaded', function() {
         })
         .catch(error => {
             console.error('Error fetching events:', error);
-            alert('Failed to load events: ' + error);
         });
     }
 
@@ -34,11 +33,55 @@ document.addEventListener('DOMContentLoaded', function() {
         li.onclick = () => {
             selectedEventId = id;
             fetchEventDetailsById(id);
-            fetchInvitesByEventId(id);
+            inviteList.innerHTML = ''; // Clear previous invites
+            fetchInvitesByEventId(id)
+                .then(displayInvites)
+                .catch(error => {
+                    console.error('Error fetching invites:', error);
+                });
             collapsible.classList.remove("active"); 
             content.style.display = 'none';
         };
         eventList.appendChild(li);
+    }
+
+    function displayInvites(invites) {
+        inviteList.innerHTML = '';
+        invites.forEach(invite => {
+            const li = document.createElement('li');
+
+            const nameDiv = document.createElement('div');
+            nameDiv.textContent = invite.name;
+            nameDiv.className = 'name-text';
+            li.appendChild(nameDiv);
+
+            const emailDiv = document.createElement('div');
+            emailDiv.textContent = invite.email;
+            emailDiv.className = 'email-text';
+            li.appendChild(emailDiv);
+
+            
+            if (invite.coming) {
+                const checkMark = document.createElement('span');
+                checkMark.textContent = ' ✔';
+                checkMark.style.color = 'green';
+                checkMark.className = 'invite-mark';
+                li.appendChild(checkMark);
+            }
+            inviteList.appendChild(li);
+        });
+    }
+
+    function fetchInvitesByEventId(eventId) {
+        const authToken = localStorage.getItem('authToken');
+        return fetch(`https://localhost:7019/api/v1/Events/${eventId}/invites?pageNr=1&pageSize=10`, {
+            method: 'GET',
+            headers: {
+                'Authorization': 'Bearer ' + authToken
+            },
+            credentials: 'include'
+        })
+        .then(response => response.ok ? response.json() : Promise.reject('Failed to fetch invites'));
     }
 
     function fetchEventDetailsById(id) {
@@ -54,37 +97,6 @@ document.addEventListener('DOMContentLoaded', function() {
         .then(event => displayEventDetails(event))
         .catch(error => {
             console.error('Error fetching event details:', error);
-            alert('Failed to load event details: ' + error);
-        });
-    }
-
-    function fetchInvitesByEventId(eventId) {
-        const authToken = localStorage.getItem('authToken');
-        fetch(`https://localhost:7019/api/v1/Events/${eventId}/invites?pageNr=1&pageSize=10`, {
-            method: 'GET',
-            headers: {
-                'Authorization': 'Bearer ' + authToken
-            },
-            credentials: 'include'
-        })
-        .then(response => response.ok ? response.json() : Promise.reject('Failed to fetch invites'))
-        .then(invites => {
-            inviteList.innerHTML = '';
-            invites.forEach(invite => {
-                const li = document.createElement('li');
-                li.textContent = `${invite.name} ${invite.email}`;
-                if (invite.coming) {
-                    const checkMark = document.createElement('span');
-                    checkMark.textContent = ' ✔';
-                    checkMark.style.color = 'green';
-                    li.appendChild(checkMark);
-                }
-                inviteList.appendChild(li);
-            });
-        })
-        .catch(error => {
-            console.error('Error fetching invites:', error);
-            alert('Failed to load invites: ' + error);
         });
     }
 
@@ -127,7 +139,6 @@ document.addEventListener('DOMContentLoaded', function() {
         eventDetails.style.display = "block";
     }
 
-    // Event listener for the collapsible
     collapsible.addEventListener('click', function() {
         this.classList.toggle("active");
         if (content.style.display === "block") {
@@ -138,14 +149,13 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 
-    // Event listener for the "Add Invite" button
     addInviteButton.addEventListener('click', function() {
         const name = document.getElementById('inviteName').value;
         const email = document.getElementById('inviteEmail').value;
-        if (!name || !email) {
-            alert('Name and email are required!');
-            return;
-        }
+        // if (!name || !email) {
+        //     alert('Name and email are required!');
+        //     return;
+        // }
         registerInvite(selectedEventId, name, email);
     });
 
@@ -199,5 +209,4 @@ document.addEventListener('DOMContentLoaded', function() {
             document.body.removeChild(messageDiv);
         }, 3000); 
     }
-    
 });
