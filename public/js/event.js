@@ -155,6 +155,7 @@ document.addEventListener('DOMContentLoaded', function() {
         // if (!name || !email) {
         //     alert('Name and email are required!');
         //     return;
+        //
         // }
         registerInvite(selectedEventId, name, email);
     });
