@@ -18,7 +18,7 @@ header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  height: 30px;
+  height: 50px; /* Increased height for better alignment and spacing */
 }
 
 nav {
@@ -35,22 +35,31 @@ nav a {
 
 .boxes-container {
   display: flex;
-  max-width: 800px;
+  max-width: 1000px; /* Increased width for larger boxes */
   margin: 0 auto;
-  margin-top: 100px;
+  margin-top: 50px; /* Increased margin-top for better spacing from the header */
 }
 
 .box {
   flex: 1;
-  width: 250px;
-  height: 350px;
-  margin: 10px;
-  padding: 15px;
+  min-width: 300px; /* Increased minimum width for better content display */
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 400px; /* Increased height for larger box */
+  margin: 20px; /* Increased margin for better spacing between boxes */
+  padding: 20px; /* Increased padding for more internal space */
   border: 1px solid #ccc;
   border-radius: 5px;
   background-color: rgba(255, 255, 255, 0.8);
-  overflow-y: auto;
-  overflow-x: hidden;
+  overflow: hidden;
+}
+
+.box-content {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden; /* Ensures no unwanted scrolling on box-content itself */
 }
 
 .collapsible-container {
@@ -59,16 +68,15 @@ nav a {
 
 .content {
   position: absolute;
-  width: 100%; /* Adjust the width as needed */
-  height: 200px; /* Fixed height */
+  width: 100%;
   top: 30px;
   left: 0;
   background-color: rgba(255, 255, 255, 0.9);
   display: none;
   z-index: 100;
-  overflow-y: scroll; /* Enable vertical scrolling */
-  overflow-x: hidden;
-  border-radius: 5px; /* Optional, for rounded corners */
+  overflow-y: auto; /* Ensures vertical scrolling */
+  max-height: 220px; /* Define max height for the dropdown to manage space */
+  border-radius: 5px;
 }
 
 button.collapsible.active + .content {
@@ -76,28 +84,20 @@ button.collapsible.active + .content {
 }
 
 button {
-  font-family: "Press Start 2P", system-ui;
   background-color: #bb74ea;
   color: white;
-  padding: 14px 20px;
-  margin: 8px 0;
+  padding: 12px; /* Increased padding for a bigger button */
   border: none;
-  cursor: pointer;
+  font-family: "Press Start 2P", system-ui;
+  font-weight: 400;
+  font-style: normal;
   width: 100%;
   border-radius: 4px;
+  cursor: pointer;
 }
 
 button:hover {
   opacity: 0.8;
-}
-
-.delete-button {
-  background-color: transparent;
-  color: red;
-  border: none;
-  padding: 10px 20px;
-  cursor: pointer;
-  white-space: nowrap;
 }
 
 #eventList li, #inviteList li {
@@ -107,37 +107,47 @@ button:hover {
   margin-bottom: 8px;
 }
 
-.event-name, .invite-name {
-  flex-grow: 1;
-  margin-right: 10px;
-  overflow: hidden;
-  white-space: nowrap;
-  text-overflow: ellipsis;
-}
-
 #inviteList {
+  flex-grow: 1;
+  overflow-y: auto; /* Only vertical scrolling */
+  margin-bottom: 10px;
   list-style: none;
-  padding-left: 0;  /* Removes default padding */
+  padding: 0;
 }
 
-#inviteList li {
-  margin: 1px 0;
-  font-size: 12px; /* Smaller font size for a compact look */
+#inviteName, #inviteEmail {
+  font-size: 12px;
   padding: 10px;
   background-color: #f9f9f9;
   border: 1px solid #ddd;
   border-radius: 10px;
-  display: flex;
-  justify-content: space-between; /* Aligns children (content and optional buttons) on opposite ends */
-  align-items: center; /* Centers children vertically */
-  margin-bottom: 5px; /* Space between items */
+  width: calc(100% - 22px);
+  margin-bottom: 5px;
+  font-family: "Press Start 2P", system-ui;
+  font-weight: 400;
+  font-style: normal;
 }
 
-.invite-content {
+.add-invite-button-container {
   display: flex;
-  flex-direction: column; /* Stack additional details vertically */
+  justify-content: center; /* Center the button horizontally */
+  align-items: center; /* Center the button vertically */
+  margin-top: 10px; /* Add some margin to separate button from input fields */
 }
 
-.invite-date, .invite-name {
-  margin-bottom: 5px; 
+#add-invite-button {
+  font-family: "Press Start 2P", system-ui;
+  font-weight: 400;
+  font-style: normal;
+  background-color: #bb74ea;
+  color: white;
+  padding: 12px; /* Increased padding for a bigger button */
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  width: 100%; /* Ensure button takes full width of container */
+}
+
+#add-invite-button:hover {
+  opacity: 0.8;
 }
