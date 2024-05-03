@@ -45,6 +45,7 @@ header {
     transform: translate(-50%, -50%);
     width: 90%;
     max-width: 400px;
+    z-index: 100;
 }
 
 .invite-wrapper {
@@ -54,6 +55,7 @@ header {
     transform: translate(-50%, -50%);
     width: 90%;
     max-width: 400px;
+    z-index: 100;
 }
 
 .event-container {

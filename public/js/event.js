@@ -158,6 +158,16 @@ document.addEventListener('DOMContentLoaded', function() {
         messageDiv.style.marginTop = '10px';
         messageDiv.style.borderRadius = '5px';
         messageDiv.style.textAlign = 'center';
+
+        messageDiv.style.zIndex = '9999'; // or even higher
+        
+        messageDiv.style.position = 'fixed'; // or 'absolute'
+        messageDiv.style.zIndex = '1000'; // High value to ensure it's on top
+        messageDiv.style.left = '50%';
+        messageDiv.style.top = '50%';
+        messageDiv.style.transform = 'translate(-50%, -50%)'; // Center the div
+        
+
         document.body.appendChild(messageDiv);
         setTimeout(() => {
             document.body.removeChild(messageDiv);
@@ -172,6 +182,17 @@ document.addEventListener('DOMContentLoaded', function() {
         messageDiv.style.padding = '10px';
         messageDiv.style.marginTop = '10px';
         messageDiv.style.borderRadius = '5px';
+
+        messageDiv.style.zIndex = '9999'; // or even higher
+
+        messageDiv.style.position = 'fixed'; // or 'absolute'
+        messageDiv.style.zIndex = '1000'; // High value to ensure it's on top
+        messageDiv.style.left = '50%';
+        messageDiv.style.top = '50%';
+        messageDiv.style.transform = 'translate(-50%, -50%)'; // Center the div
+
+
+
         messageDiv.style.textAlign = 'center';
         document.body.appendChild(messageDiv);
         setTimeout(() => {

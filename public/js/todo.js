@@ -40,7 +40,7 @@ document.addEventListener('DOMContentLoaded', function() {
         })
         .catch(error => {
             console.error('Error adding todo:', error);
-            alert('Failed to add todo: ' + error.message);  // Show user-friendly error message
+            //alert('Failed to add todo: ' + error.message);  // Show user-friendly error message
         });
     }
 
@@ -55,7 +55,7 @@ document.addEventListener('DOMContentLoaded', function() {
         })
         .then(response => {
             if (!response.ok) {
-                throw new Error('Failed to fetch todos: ' + response.statusText);
+               throw new Error('Failed to fetch todos: ' + response.statusText);
             }
             return response.json();
         })
