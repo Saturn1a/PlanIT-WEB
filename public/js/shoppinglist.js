@@ -55,7 +55,7 @@ document.addEventListener('DOMContentLoaded', function() {
         })
         .then(response => {
             if (!response.ok) {
-                throw new Error('Failed to fetch shopping list: ' + response.statusText);
+               throw new Error('Failed to fetch shopping list: ' + response.statusText);
             }
             return response.json();
         })
@@ -68,7 +68,7 @@ document.addEventListener('DOMContentLoaded', function() {
         })
         .catch(error => {
             console.error('Error fetching shopping list:', error);
-            alert('Failed to load shopping list: ' + error.message);
+            // alert('Failed to load shopping list: ' + error.message);
         });
     }
 
