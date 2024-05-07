@@ -13,7 +13,7 @@ document.addEventListener('DOMContentLoaded', function() {
             const value = addItemInput.value.trim();
             if (value) {
                 addTodo(value);
-                addItemInput.value = '';  // Clear input after adding
+                addItemInput.value = '';  
             }
         }
     });
@@ -27,12 +27,12 @@ document.addEventListener('DOMContentLoaded', function() {
                 'Accept': 'application/json',
                 'Authorization': 'Bearer ' + authToken
             },
-            body: JSON.stringify({ name: Name }), // Adjusted to match server expectations
+            body: JSON.stringify({ name: Name }), 
             credentials: 'include'
         })
         .then(response => response.json())
         .then(data => {
-            if (data && data.id && data.name) { // Adjusted to match the ToDoDTO structure
+            if (data && data.id && data.name) { 
                 createTodoElement(data.id, data.name);
             } else {
                 throw new Error('Invalid todo data received');
@@ -40,7 +40,7 @@ document.addEventListener('DOMContentLoaded', function() {
         })
         .catch(error => {
             console.error('Error adding todo:', error);
-            //alert('Failed to add todo: ' + error.message);  // Show user-friendly error message
+            alert('Failed to add todo: ' + error.message);
         });
     }
 
@@ -60,10 +60,10 @@ document.addEventListener('DOMContentLoaded', function() {
             return response.json();
         })
         .then(data => {
-            console.log('Todo data:', data); // Add this to see what data is actually returned
-            todoList.innerHTML = '';  // Clear the list before appending new items
+            console.log('Todo data:', data); 
+            todoList.innerHTML = ''; 
             data.forEach(todo => {
-                createTodoElement(todo.id, todo.name); // Adjusted to correct property name
+                createTodoElement(todo.id, todo.name); 
             });
         })
         .catch(error => {
@@ -74,7 +74,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     function createTodoElement(id, name) {
         const li = document.createElement('li');
-        li.textContent = name; // Display the name
+        li.textContent = name;
 
         const deleteBtn = document.createElement('button');
         deleteBtn.textContent = '✖';
@@ -102,7 +102,7 @@ document.addEventListener('DOMContentLoaded', function() {
         })
         .catch(error => {
             console.error('Error deleting todo:', error);
-            alert('Failed to delete todo: ' + error.message);  // Show user-friendly error message
+            alert('Failed to delete todo: ' + error.message);  
         });
     }
 

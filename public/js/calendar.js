@@ -61,7 +61,7 @@ function renderCalendar(month, year) {
     daysContainer.innerHTML = '';
 
     let firstDay = new Date(year, month, 1).getDay();
-    firstDay = firstDay === 0 ? 6 : firstDay - 1; // Adjust for Monday start if your week starts on Monday
+    firstDay = firstDay === 0 ? 6 : firstDay - 1; // Week starts on Monday
 
     let daysInMonth = new Date(year, month + 1, 0).getDate();
 
@@ -78,7 +78,7 @@ function renderCalendar(month, year) {
         daysContainer.appendChild(dayItem);
     }
 
-    // Calculate and add empty slots at the end, if needed, to keep layout uniform
+    // Calculate and add empty slots at the end
     const totalSlots = firstDay + daysInMonth;
     const emptySlotsAtEnd = totalSlots % 7 ? 7 - (totalSlots % 7) : 0;
     for (let i = 0; i < emptySlotsAtEnd; i++) {

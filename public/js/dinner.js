@@ -96,12 +96,11 @@ function displayDinners(data) {
     });
 }
 
-
 function addInputEventListeners() {
     const days = ["monday", "tuesday", "wednesday", "thursday", "friday", "saturday", "sunday"];
     days.forEach(day => {
         const input = document.getElementById(day);
-        
+
         // Reacting when user changes the input or moves out of the input field
         input.addEventListener('change', () => {
             const value = input.value.trim();
@@ -114,6 +113,9 @@ function addInputEventListeners() {
             } else if (value && !dinnerId) {
                 // Create new dinner
                 updateOrCreateDinner(day, value, null, date);
+            } else if (!value && dinnerId) {
+                // If the input is cleared and a dinner ID exists, delete the dinner
+                deleteDinner(dinnerId, day);
             }
         });
     });

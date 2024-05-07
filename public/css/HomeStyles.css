@@ -17,7 +17,7 @@ body, html {
     font-family: "Press Start 2P", system-ui;
     font-weight: 400;
     font-style: normal;
-    margin-left: auto; /* Pushes the button to the right */
+    margin-left: auto; 
     background-color: #bb74ea;
     color: white;
     padding: 10px 20px;
@@ -36,9 +36,9 @@ header {
     background-color: rgba(255, 255, 255, 0.8);
     color: #bb74ea;
     padding: 10px 20px;
-    display: flex; /* Enables Flexbox layout */
-    justify-content: space-between; /* Spaces out child elements */
-    align-items: center; /* Vertically centers child elements */
+    display: flex; 
+    justify-content: space-between; 
+    align-items: center; 
     height: 30px;
 }
 
@@ -46,7 +46,7 @@ header {
 nav {
     width: 100%; /* Ensures the nav container fills the entire header */
     display: flex;
-    justify-content: space-between; /* This will not be effective since `nav a` will take precedence */
+    justify-content: space-between;
     align-items: center;
 }
 
@@ -54,7 +54,7 @@ nav {
 nav a {
     color: #bb74ea;
     text-decoration: none;
-    margin-right: 20px; /* Adds space between multiple navigation links */
+    margin-right: 20px; 
 }
 
 
@@ -71,29 +71,29 @@ main {
 #calendar-container {
     flex: 1; /* Allows the calendar to grow but with a maximum width */
     max-width: 50%; /* Limits the calendar to half of the main container */
-    height: 670px; /* Fixed height */
+    height: 670px; 
     padding: 20px;
-    margin-right: 20px; /* Adds some space between the calendar and the lists */
+    margin-right: 20px; 
     background-color: rgba(255, 255, 255, 0.8);
     box-shadow: 0 0 10px rgba(0,0,0,0.1);
-    border-radius: 10px; /* Rounded corners */
+    border-radius: 10px;
 }
 
 #calendar-container h3 {
     text-align: center;
-    color: #bb74ea; /* Adjust the color as needed */
-    margin: 0 0 20px 0; /* Adds some space below the header, no top margin to avoid extra space */
-    padding: 0; /* No padding to keep the text aligned with the calendar's content */
-    font-size: 1.5em; /* Makes the header text stand out */
-    background-color: transparent; /* Ensures no background for the header text */
-    border: none; /* Ensures no border around the header text */
+    color: #bb74ea; 
+    margin: 0 0 20px 0; 
+    padding: 0; 
+    font-size: 1.5em; 
+    background-color: transparent; 
+    border: none; 
 }
 
 .calendar-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 0 10px; /* Adjust based on your layout */
+    padding: 0 10px; 
 }
 
 #prev-month, #next-month {
@@ -103,11 +103,11 @@ main {
     border: none;
     border-radius: 10px;
     text-align: center;
-    font-size: 25px; /* Adjust the value as needed */
+    font-size: 25px; 
     padding-top: 0px;
     padding-bottom: 0px;
-    padding-left: 3px; /* Maintain left padding */
-    padding-right: 3px; /* Maintain right padding */
+    padding-left: 3px; 
+    padding-right: 3px; 
     min-width: 50px; /* Ensure buttons have a fixed width */
     
 }
@@ -122,21 +122,21 @@ main {
     padding: 0;
     margin: 0;
     display: flex;
-    flex-wrap: wrap; /* Allows items to wrap to the next line */
+    flex-wrap: wrap; 
 }
 
 .weekdays li, .days li {
-    flex: 1 0 14.28%; /* Distributes space evenly among items */
+    flex: 1 0 14.28%; 
     text-align: center;
-    border: 1px solid #ddd; /* Adds borders to create "boxes" */
-    box-sizing: border-box; /* Includes padding and border in the element's total width */
+    border: 1px solid #ddd; 
+    box-sizing: border-box; 
 }
 
 .days li {
     height: 100px; /* Sets a fixed height for day "boxes" */
     display: flex;
-    align-items: center; /* Vertically centers the content */
-    justify-content: center; /* Horizontally centers the content */
+    align-items: center; 
+    justify-content: center; 
 }
 
 #month-select, #year-select {
@@ -144,17 +144,17 @@ main {
     font-size: 16px;
     color: #bb74ea;
     cursor: pointer;
-    border: 1px solid #a06cd5; /* Styling borders */
-    border-radius: 10px; /* Rounded corners for aesthetics */
-    padding: 10px 20px; /* Padding for better touch area */
-    background-color: rgba(255, 255, 255, 0.5); /* Background color */
+    border: 1px solid #a06cd5; 
+    border-radius: 10px; 
+    padding: 10px 20px; 
+    background-color: rgba(255, 255, 255, 0.5); 
 }
 
 
 #side-content {
     display: flex;
     flex-wrap: wrap;
-    justify-content: space-between; /* Ensures space between columns */
+    justify-content: space-between; 
     align-items: stretch; /* This will make all the child boxes stretch to fill the container equally */
     max-width: 50%;
     height: 670px; /* Same as the calendar */
@@ -162,12 +162,12 @@ main {
 }
 
 .content-box {
-    flex: 0 0 calc(50% - 10px); /* Width calculation */
+    flex: 0 0 calc(50% - 10px); 
     padding: 10px;
-    margin-bottom: 10px; /* Space between the rows of boxes */
-    height: 350px; /* Fixed height calculated */
-    overflow-y: auto; /* Vertical scrolling enabled */
-    overflow-x: hidden; /* Prevent horizontal scrolling */
+    margin-bottom: 10px; 
+    height: 350px; 
+    overflow-y: auto; 
+    overflow-x: hidden; 
     background-color: rgba(255, 255, 255, 0.8);
     opacity: 0.9;
     box-shadow: 0 2px 4px rgba(0,0,0,0.1);
@@ -180,7 +180,7 @@ main {
 }
 
 .content-box:nth-of-type(2n+1) {
-    margin-right: 20px; /* Adds right margin to odd instances for spacing */
+    margin-right: 20px; 
 }
 
 
@@ -189,22 +189,21 @@ main {
 }
 
 .content-box h3 {
-    font-size: 1em; /* Consistent font size */
+    font-size: 1em; 
     text-align: center;
-    color: black; /* Ensures readability, adjust if you prefer the purple theme */
+    color: black; 
     margin: 0 0 20px 0; /* Space below the header */
-    padding-top: 5px; /* Slight top padding */
-    /* padding: 5px 0 0 0; /* Padding top for spacing above the text */
-    background-color: transparent; /* No background color for header */
-    border: none; /* No border around the text */
+    padding-top: 5px; 
+    background-color: transparent; 
+    border: none; 
 }
 
 
 .content-box ul {
     list-style-type: none; /* No bullets */
-    padding: 0; /* No padding */
-    margin: 0; /* Ensure there's no extra space */
-    background-color: transparent; /* Transparent background */
+    padding: 0; 
+    margin: 0; 
+    background-color: transparent; 
 }
 
 footer {
@@ -236,21 +235,21 @@ button {
 #todo-list input[type="text"] {
     width: 100%;
     padding: 8px 10px;
-    margin-bottom: 10px; /* Space below the input field */
-    font-family: 'Press Start 2P', cursive; /* Stylized font */
-    box-sizing: border-box; /* Includes padding and border in the element's total width */
-    border-radius: 10px; /* Adds rounded corners */
-    border: 1px solid #ccc; /* Optional: adds a subtle border for better visual separation */
+    margin-bottom: 10px; 
+    font-family: 'Press Start 2P', cursive; 
+    box-sizing: border-box; 
+    border-radius: 10px; 
+    border: 1px solid #ccc; 
 }
 
 #shopping-list input[type="text"] {
     width: 100%;
     padding: 8px 10px;
-    margin-bottom: 10px; /* Space below the input field */
-    font-family: 'Press Start 2P', cursive; /* Stylized font */
-    box-sizing: border-box; /* Includes padding and border in the element's total width */
-    border-radius: 10px; /* Adds rounded corners */
-    border: 1px solid #ccc; /* Optional: adds a subtle border for better visual separation */
+    margin-bottom: 10px; 
+    font-family: 'Press Start 2P', cursive;
+    box-sizing: border-box; 
+    border-radius: 10px; 
+    border: 1px solid #ccc; 
 }
 
 
@@ -275,14 +274,14 @@ button {
     padding: 7px;
     margin: 0;
     border-radius: 10px;  /* Adds rounded corners to the input */
-    border: 1px solid #ccc; /* Optional: adds a subtle border for better visual separation */
+    border: 1px solid #ccc; 
 }
 
 #dinner-plans .week-navigation {
-    display: flex; /* Enables flexbox */
+    display: flex; 
     justify-content: space-between; /* Distributes space evenly between the elements */
-    align-items: center; /* Aligns items vertically in the center */
-    margin: 10px 0; /* Adds vertical space around the navigation */
+    align-items: center; 
+    margin: 10px 0; 
 }
 
 #prevWeek, #nextWeek {
@@ -291,8 +290,8 @@ button {
     color: white;
     border: none;
     border-radius: 10px;
-    font-size: 18px; /* Smaller font size for better fit */
-    padding: 1px 8px; /* Adjust padding for better visual */
+    font-size: 18px; 
+    padding: 1px 8px; 
 }
 
 #prevWeek:hover, #nextWeek:hover {
@@ -300,16 +299,16 @@ button {
 }
 
 #weekLabel {
-    flex-grow: 1; /* Allows the week label to take up any extra space */
-    text-align: center; /* Centers the text inside the span */
-    font-size: 14px; /* Larger font size for emphasis */
+    flex-grow: 1; 
+    text-align: center; 
+    font-size: 14px; 
 }
 
 .input-group {
     display: flex;
-    align-items: center; /* Align vertically */
-    justify-content: flex-start; /* Align horizontally to the start */
-    gap: 5px; /* Space between elements */
+    align-items: center;
+    justify-content: flex-start; 
+    gap: 5px; 
 }
 
 #important-dates input[type="text"],
@@ -317,7 +316,7 @@ button {
     flex-grow: 1; /* Allows inputs to grow and fill available space */
     flex-basis: 0%;
     padding: 8px;
-    margin: 2; /* Adjust margin as needed */
+    margin: 2; 
     border: 1px solid #ccc;
     border-radius: 10px;
 }
@@ -343,7 +342,7 @@ button {
 #dates-items li {
     list-style: none;
     margin: 1px 0;
-    font-size: 12px; /* Smaller font size for better fit */
+    font-size: 12px; 
     padding: 10px;
     background-color: #f9f9f9;
     border: 1px solid #ddd;
@@ -353,12 +352,12 @@ button {
 #dates-items .date-item {
     display: flex;
     justify-content: space-between; /* Aligns children (contentDiv and deleteBtn) on opposite ends */
-    align-items: center; /* Centers children vertically */
+    align-items: center; 
     padding: 10px;
     background-color: #f9f9f9;
     border: 1px solid #ddd;
     border-radius: 10px;
-    margin-bottom: 5px; /* Space between items */
+    margin-bottom: 5px;
 }
 
 .content-div {
@@ -371,7 +370,7 @@ button {
 }
 
 #dates-items .delete-button {
-    margin-left: 10px; /* Ensure some space between the content and the button */
+    margin-left: 10px; 
     background-color: transparent;
     color: red;
     border: none;
@@ -381,25 +380,25 @@ button {
 }
 
 #dates-items .date-item.today-highlight {
-    background-color: rgba(194, 188, 252, 0.5); /* 50% transparency */
+    background-color: rgba(194, 188, 252, 0.5); 
 }
 
 
 .swal2-icon.swal2-info {
-    border-color: #a06cd5; /* Changes the border color for info */
-    color: #bb74ea; /* Changes the color of the info mark */
+    border-color: #a06cd5; 
+    color: #bb74ea; 
   }
 
 @media (max-width: 768px) {
     #calendar-container, #side-content {
         max-width: 100%;
         flex-direction: column;
-        margin-right: 0; /* Adjusts margins for mobile layout */
+        margin-right: 0; 
     }
 
     .content-box {
         width: 100%;
-        margin-bottom: 20px; /* Consistent bottom margin for all boxes */
-        margin-right: 0; /* Removes right margin for a clean vertical stack */
+        margin-bottom: 20px; 
+        margin-right: 0; 
     }
 }
