@@ -7,6 +7,8 @@ document.addEventListener('DOMContentLoaded', function() {
     const content = collapsible.nextElementSibling;
     let selectedEventId = null;
 
+
+   
     function fetchEvents() {
         const authToken = localStorage.getItem('authToken');
         fetch('https://localhost:7019/api/v1/Events?pageNr=1&pageSize=10', {
@@ -19,12 +21,24 @@ document.addEventListener('DOMContentLoaded', function() {
         .then(response => response.ok ? response.json() : Promise.reject('Failed to fetch events'))
         .then(data => {
             eventList.innerHTML = '';
-            data.forEach(event => createEventElement(event.id, event.name));
+            const currentDate = new Date();
+            currentDate.setHours(0, 0, 0, 0); // Set time to 00:00:00 to include all of today's events
+    
+            // Sort events by date in ascending order
+            data.sort((a, b) => new Date(a.date) - new Date(b.date));
+    
+            data.forEach(event => {
+                const eventDate = new Date(event.date);
+                if (eventDate >= currentDate) { // Check if the event date is today or in the future
+                    createEventElement(event.id, event.name);
+                }
+            });
         })
         .catch(error => {
             console.error('Error fetching events:', error);
         });
     }
+    
 
     function createEventElement(id, name) {
         const li = document.createElement('li');
@@ -33,7 +47,7 @@ document.addEventListener('DOMContentLoaded', function() {
         li.onclick = () => {
             selectedEventId = id;
             fetchEventDetailsById(id);
-            inviteList.innerHTML = ''; // Clear previous invites
+            inviteList.innerHTML = ''; 
             fetchInvitesByEventId(id)
                 .then(displayInvites)
                 .catch(error => {
@@ -152,11 +166,7 @@ document.addEventListener('DOMContentLoaded', function() {
     addInviteButton.addEventListener('click', function() {
         const name = document.getElementById('inviteName').value;
         const email = document.getElementById('inviteEmail').value;
-        // if (!name || !email) {
-        //     alert('Name and email are required!');
-        //     return;
-        //
-        // }
+       
         registerInvite(selectedEventId, name, email);
     });
 
@@ -170,13 +180,13 @@ document.addEventListener('DOMContentLoaded', function() {
         messageDiv.style.borderRadius = '5px';
         messageDiv.style.textAlign = 'center';
 
-        messageDiv.style.zIndex = '9999'; // or even higher
+        messageDiv.style.zIndex = '9999'; 
         
-        messageDiv.style.position = 'fixed'; // or 'absolute'
-        messageDiv.style.zIndex = '1000'; // High value to ensure it's on top
+        messageDiv.style.position = 'fixed'; 
+        messageDiv.style.zIndex = '1000'; 
         messageDiv.style.left = '50%';
         messageDiv.style.top = '50%';
-        messageDiv.style.transform = 'translate(-50%, -50%)'; // Center the div
+        messageDiv.style.transform = 'translate(-50%, -50%)'; 
         
 
         document.body.appendChild(messageDiv);
@@ -194,13 +204,13 @@ document.addEventListener('DOMContentLoaded', function() {
         messageDiv.style.marginTop = '10px';
         messageDiv.style.borderRadius = '5px';
 
-        messageDiv.style.zIndex = '9999'; // or even higher
+        messageDiv.style.zIndex = '9999';
 
-        messageDiv.style.position = 'fixed'; // or 'absolute'
-        messageDiv.style.zIndex = '1000'; // High value to ensure it's on top
+        messageDiv.style.position = 'fixed'; 
+        messageDiv.style.zIndex = '1000'; 
         messageDiv.style.left = '50%';
         messageDiv.style.top = '50%';
-        messageDiv.style.transform = 'translate(-50%, -50%)'; // Center the div
+        messageDiv.style.transform = 'translate(-50%, -50%)'; 
 
 
 

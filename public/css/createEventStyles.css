@@ -15,15 +15,15 @@ header {
     background-color: rgba(255, 255, 255, 0.8);
     color: #bb74ea;
     padding: 10px 20px;
-    display: flex; /* Enables Flexbox layout */
-    justify-content: space-between; /* Spaces out child elements */
-    align-items: center; /* Vertically centers child elements */
+    display: flex; 
+    justify-content: space-between;
+    align-items: center; 
     height: 30px;
   }
   
   /* Navigation container styling */
   nav {
-    width: 100%; /* Ensures the nav container fills the entire header */
+    width: 100%; 
     display: flex;
     align-items: center;
   }
@@ -126,8 +126,8 @@ button:hover {
     border-radius: 10px; /* Rounded corners */
     z-index: 500;
     display: inline-block; /* Ensures it takes only necessary space */
-    width: auto; /* Explicitly define width as auto */
-    font-size: 1em; /* Adjust font size as needed for better visibility */
+    width: auto; 
+    font-size: 1em;
 }
 
 .back-button:hover {

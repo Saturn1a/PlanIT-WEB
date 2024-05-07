@@ -52,7 +52,7 @@ nav a {
   border: 1px solid #ccc;
   border-radius: 10px;
   background-color: rgba(255, 255, 255, 0.8);
-  max-height: 400px; /* Set a max-height for the boxes */
+  max-height: 400px; 
   overflow-y: auto; /* Enables vertical scrolling */
   overflow-x: hidden;
 }
@@ -123,7 +123,7 @@ button:hover {
 #contact-list {
   list-style-type: none; /* Removes bullet points */
   padding: 0; /* Removes default padding */
-  margin: 0; /* Adjusts margin as needed, depending on your layout */
+  margin: 0; 
 }
 
 #contact-list .contact-item {

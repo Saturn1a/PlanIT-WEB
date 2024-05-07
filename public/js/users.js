@@ -1,8 +1,8 @@
 document.addEventListener("DOMContentLoaded", function() {
-    fetchUserProfile(true); // Fetch user profile data and display error message if needed
+    fetchUserProfile(true); 
     bindFormEvent();
     
-    // Add event listener for delete button to show the modal
+    
     document.getElementById('delete-button').addEventListener('click', function() {
         // Show the custom modal
         document.getElementById('custom-modal').style.display = 'block';
@@ -10,7 +10,6 @@ document.addEventListener("DOMContentLoaded", function() {
     
     // Add event listener to confirm deletion
     document.getElementById('confirm-delete').addEventListener('click', function() {
-        // Call deleteUser() function or perform deletion action
         deleteUser();
         // Hide the modal after confirmation
         document.getElementById('custom-modal').style.display = 'none';
@@ -25,7 +24,6 @@ document.addEventListener("DOMContentLoaded", function() {
 
 function fetchUserProfile(displayError) {
     const token = localStorage.getItem('authToken');
-    console.log("Retrieved token:", token);  // Log to verify the token
 
     if (!token) {
         console.error("No token available.");
@@ -70,8 +68,8 @@ function fetchUserProfile(displayError) {
 }
 
 function displayUserProfile(user) {
-    document.getElementById('name').value = user.name || ''; // Fill out name field
-    document.getElementById('email').value = user.email || ''; // Fill out email field
+    document.getElementById('name').value = user.name || ''; 
+    document.getElementById('email').value = user.email || ''; 
 }
 
 function deleteUser() {
@@ -94,18 +92,16 @@ function deleteUser() {
         // Redirect to index.html after a short delay
         setTimeout(() => {
             window.location.href = 'index.html';
-        }, 3000); // Redirect after 3 seconds (3000 milliseconds)
+        }, 3000); 
         return response.json();
     })
     .then(data => {
         // Handle successful deletion
         console.log('User deleted successfully');
-        // Optionally, redirect to a different page or perform any other action
     })
     .catch(error => {
         console.error('Error deleting user:', error);
         displayErrorMessage('Failed to delete user.');
-        // Handle error
     });
 }
 
@@ -151,7 +147,7 @@ function bindFormEvent() {
             // Reload the page after successful update
             setTimeout(() => {
                 location.reload();
-            }, 3000); // Reload after 3 seconds (3000 milliseconds)
+            }, 3000); 
             return response.json();
         })
         .then(data => {
@@ -161,7 +157,6 @@ function bindFormEvent() {
         .catch(error => {
             console.error('Error:', error);
             displayErrorMessage('Failed to update user information.');
-            // Handle error
         });
     });
 }
@@ -183,7 +178,7 @@ function displaySuccessMessage(message, duration = 3000) {
     messageDiv.style.textAlign = 'center';
 
     const form = document.getElementById('registration-form');
-    form.parentNode.insertBefore(messageDiv, form.nextSibling); // Insert after the form
+    form.parentNode.insertBefore(messageDiv, form.nextSibling);
 
     setTimeout(() => {
         messageDiv.remove(); // Remove the message after the specified duration
@@ -202,7 +197,7 @@ function displayErrorMessage(message, duration = 3000) {
     messageDiv.style.textAlign = 'center';
 
     const form = document.getElementById('registration-form');
-    form.parentNode.insertBefore(messageDiv, form.nextSibling); // Insert after the form
+    form.parentNode.insertBefore(messageDiv, form.nextSibling); 
 
     setTimeout(() => {
         messageDiv.remove(); // Remove the message after the specified duration

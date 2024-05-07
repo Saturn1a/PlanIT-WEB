@@ -15,15 +15,15 @@ header {
     background-color: rgba(255, 255, 255, 0.8);
     color: #bb74ea;
     padding: 10px 20px;
-    display: flex; /* Enables Flexbox layout */
-    justify-content: space-between; /* Spaces out child elements */
-    align-items: center; /* Vertically centers child elements */
+    display: flex; 
+    justify-content: space-between; 
+    align-items: center; 
     height: 30px;
 }
 
 /* Navigation container styling */
 nav {
-    width: 100%; /* Ensures the nav container fills the entire header */
+    width: 100%; 
     display: flex;
     align-items: center;
 }
@@ -96,11 +96,11 @@ button:hover {
     padding: 15px 30px;
     border: none;
     cursor: pointer;
-    border-radius: 10px; /* Rounded corners */
+    border-radius: 10px; 
     z-index: 500;
-    display: inline-block; /* Ensures it takes only necessary space */
-    width: auto; /* Explicitly define width as auto */
-    font-size: 1em; /* Adjust font size as needed for better visibility */
+    display: inline-block;
+    width: auto; 
+    font-size: 1em; 
 }
 
 .back-button:hover {
@@ -113,13 +113,13 @@ button:hover {
     border-radius: 10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
     width: 90%;
-    max-width: 500px; /* Adjust max width as needed */
-    margin: 0rem auto; /* This will add margin on the top and bottom, and auto on left and right for centering */
-    box-sizing: border-box; /* Ensures padding doesn't affect the overall width */
+    max-width: 500px; 
+    margin: 0rem auto; 
+    box-sizing: border-box; 
 }
 
 #user-profile {
-    text-align: center; /* Center the text if that is your preference */
+    text-align: center; 
 }
 
 #error-message {
@@ -127,7 +127,7 @@ button:hover {
     color: red;
     font-size: 16px;
     text-align: center;
-    margin-bottom: 1rem; /* Adds space below the error message */
+    margin-bottom: 1rem; 
 }
 
 .user-wrapper {
@@ -155,7 +155,7 @@ button:hover {
     transform: translate(-50%, -50%);
     width: 90%;
     max-width: 400px;
-    margin-top: 0px; /* Remove additional top margin */
+    margin-top: 0px; 
 }
 
 .modal {
@@ -167,7 +167,7 @@ button:hover {
     width: 100%;
     height: 100%;
     overflow: auto;
-    border-radius: 10px; /* Rounded corners */
+    border-radius: 10px; 
     background-color: rgba(0, 0, 0, 0.5);
   }
   
@@ -177,7 +177,7 @@ button:hover {
     padding: 20px;
     border: 1px solid #888;
     width: 50%;
-    border-radius: 10px; /* Rounded corners */
+    border-radius: 10px; 
     text-align: center;
   }
   
@@ -206,4 +206,3 @@ button:hover {
     cursor: pointer;
     border-radius: 5px;
   }
-  

@@ -68,13 +68,12 @@ document.addEventListener('DOMContentLoaded', function() {
         })
         .catch(error => {
             console.error('Error fetching shopping list:', error);
-            // alert('Failed to load shopping list: ' + error.message);
         });
     }
 
     function createShoppingElement(id, name) {
         const li = document.createElement('li');
-        li.textContent = name; // Display the name
+        li.textContent = name; 
 
         const deleteBtn = document.createElement('button');
         deleteBtn.textContent = '✖';
